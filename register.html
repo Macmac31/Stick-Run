@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRC - Register</title>
+    
+    <link rel="icon" href="/images/src1.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --orange-primary: #ff6b00;
+            --orange-secondary: #ff9500;
+            --orange-yellow: #ffb300;
+            --orange-light: #ffcc80;
+            --orange-bg: #1c0f0a;
+            --orange-card: #2c1810;
+            --orange-text: #f5e6d3;
+            --orange-gray: #d7ccc8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0508, #140a05);
+            color: var(--orange-text);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255, 107, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 149, 0, 0.08) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(255, 107, 0, 0.02) 0px, rgba(255, 107, 0, 0.02) 2px, transparent 2px, transparent 8px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Navigation ── */
+        .navbar-classic {
+            background: rgba(44, 24, 16, 0.98);
+            backdrop-filter: blur(15px);
+            border-bottom: 3px solid var(--orange-primary);
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-horizontal {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-horizontal:hover { transform: scale(1.02); }
+
+        .logo-img {
+            height: 45px;
+            width: 45px;
+            border-radius: 50%;
+            object-fit: contain;
+            border: 2px solid var(--orange-primary);
+            padding: 3px;
+            background: var(--orange-bg);
+            transition: all 0.3s ease;
+        }
+
+        .logo-horizontal:hover .logo-img {
+            transform: rotate(360deg);
+            border-color: var(--orange-yellow);
+        }
+
+        .logo-full-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .nav-link-classic {
+            color: var(--orange-gray) !important;
+            font-weight: 600;
+            padding: 0.5rem 1rem !important;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .nav-link-classic::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--orange-primary), var(--orange-yellow));
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link-classic:hover::after,
+        .nav-link-classic.active::after { width: 70%; }
+
+        .nav-link-classic:hover {
+            background: rgba(255, 107, 0, 0.1);
+            color: var(--orange-primary) !important;
+        }
+
+        .nav-link-classic.active {
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary));
+            color: white !important;
+        }
+
+        .navbar-toggler { border-color: rgba(255, 107, 0, 0.5); }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 107, 0, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        .btn-discord {
+            background: linear-gradient(135deg, #5865F2, #4752c4);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-discord:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(88, 101, 242, 0.4);
+            color: white;
+        }
+
+        /* ── Page layout ── */
+        .form-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── Card ── */
+        .register-card {
+            background: rgba(44, 24, 16, 0.95);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 107, 0, 0.3);
+            border-radius: 24px;
+            padding: 2.5rem 2.5rem 2rem;
+            width: 100%;
+            max-width: 500px;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .register-card:hover {
+            border-color: var(--orange-primary);
+            box-shadow: 0 0 40px rgba(255, 107, 0, 0.15);
+        }
+
+        /* ── Card header ── */
+        .card-header-area {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .card-header-area h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b00, #ff9500, #ffb300);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            margin-bottom: 0.4rem;
+        }
+
+        .card-header-area p {
+            color: var(--orange-gray);
+            font-size: 0.875rem;
+        }
+
+        .card-header-area p span {
+            color: var(--orange-primary);
+            font-weight: 600;
+        }
+
+        /* ── Field rows ── */
+        .field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.25rem;
+        }
+
+        .field label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--orange-light);
+            margin-bottom: 7px;
+        }
+
+        .field label i { color: var(--orange-primary); font-size: 14px; }
+
+        /* ── Inputs ── */
+        .field input[type="text"],
+        .field input[type="email"],
+        .field input[type="password"] {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 107, 0, 0.25);
+            border-radius: 12px;
+            color: var(--orange-text);
+            font-size: 0.9rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        .field input[type="password"] { padding-right: 44px; }
+
+        .field input:focus {
+            border-color: var(--orange-primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.12);
+            background: rgba(0, 0, 0, 0.65);
+        }
+
+        .field input.is-valid   { border-color: #5a9a1a; }
+        .field input.is-invalid { border-color: #e04040; }
+
+        .field input::placeholder { color: rgba(215, 204, 200, 0.35); }
+
+        /* password wrapper */
+        .pw-wrap { position: relative; }
+
+        .pw-toggle {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #7a5a3a;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+
+        .pw-toggle:hover { color: var(--orange-primary); }
+
+        /* hint text under field */
+        .field-hint {
+            font-size: 0.72rem;
+            margin-top: 5px;
+            min-height: 16px;
+        }
+
+        .field-hint.muted   { color: rgba(215, 204, 200, 0.45); }
+        .field-hint.ok      { color: #6ab820; }
+        .field-hint.err     { color: #e04040; }
+
+        /* password strength bars */
+        .pw-strength {
+            display: flex;
+            gap: 4px;
+            margin-top: 6px;
+        }
+
+        .pw-strength span {
+            flex: 1;
+            height: 3px;
+            border-radius: 2px;
+            background: rgba(255, 107, 0, 0.12);
+            transition: background 0.25s;
+        }
+
+        .pw-strength span.weak { background: #e04040; }
+        .pw-strength span.fair { background: #e08020; }
+        .pw-strength span.good { background: #6ab820; }
+
+        /* ── Divider ── */
+        .form-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 107, 0, 0.15);
+            margin: 0.5rem 0 1.25rem;
+        }
+
+        /* ── CAPTCHA ── */
+        .captcha-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        #captchaImage {
+            flex: 1;
+            height: 52px;
+            object-fit: contain;
+            background: #1a1a2e;
+            border: 2px solid rgba(255, 107, 0, 0.4);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        #captchaImage:hover { border-color: var(--orange-primary); }
+
+        #reloadCaptchaButton {
+            flex-shrink: 0;
+            width: 42px;
+            height: 42px;
+            cursor: pointer;
+            filter: brightness(0) saturate(100%) invert(45%) sepia(80%) saturate(500%) hue-rotate(5deg);
+            background: rgba(255, 107, 0, 0.1);
+            border-radius: 50%;
+            padding: 8px;
+            transition: transform 0.4s ease, background 0.2s;
+        }
+
+        #reloadCaptchaButton:hover {
+            transform: rotate(180deg);
+            background: rgba(255, 107, 0, 0.25);
+        }
+
+        .captcha-hint {
+            font-size: 0.72rem;
+            color: rgba(215, 204, 200, 0.45);
+            margin-top: 6px;
+        }
+
+
+
+        /* ── Buttons ── */
+        .btn-register {
+            display: block;
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .btn-register::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+            transition: left 0.45s ease;
+        }
+
+        .btn-register:hover::before { left: 100%; }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 107, 0, 0.45);
+        }
+
+        .btn-home {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 0.75rem;
+            padding: 11px;
+            background: transparent;
+            border: 2px solid rgba(255, 107, 0, 0.4);
+            border-radius: 50px;
+            color: var(--orange-light);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .btn-home:hover {
+            border-color: var(--orange-primary);
+            color: var(--orange-primary);
+            background: rgba(255, 107, 0, 0.08);
+        }
+
+        .error-msg {
+            color: #e04040;
+            font-size: 0.72rem;
+            margin-top: 4px;
+            display: none;
+        }
+
+        /* ── Footer ── */
+        .footer-classic {
+            background: rgba(26, 11, 7, 0.98);
+            border-top: 3px solid var(--orange-primary);
+            padding: 3rem 0 1.5rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-title {
+            color: var(--orange-yellow);
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--orange-gray);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--orange-primary);
+            padding-left: 5px;
+        }
+
+        .border-orange { border-color: rgba(255,107,0,0.3) !important; }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 107, 0, 0.1);
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .social-icon:hover {
+            background: rgba(255, 107, 0, 0.25);
+            transform: translateY(-3px);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 576px) {
+            .register-card { padding: 1.75rem 1.25rem 1.5rem; }
+            .register-card h2 { font-size: 1.5rem; }
+            .field-row { grid-template-columns: 1fr; gap: 0; }
+            .logo-full-text { display: none; }
+            .btn-discord { padding: 0.4rem 1rem; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-classic">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <div class="logo-horizontal">
+                    <img src="/images/src.png" alt="Stick Run Classic" class="logo-img">
+                    <span class="logo-full-text">STICK RUN CLASSIC</span>
+                </div>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link nav-link-classic" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-classic" href="index.html#items">Items</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-classic" href="index.html#rankings">Rankings</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-classic" href="index.html#team">Team</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-classic" href="index.html#download">Download</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-classic active" href="register.html">Register</a></li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn-discord" href="https://discord.gg/F7t9cf4gUm" target="_blank">
+                            <i class="bi bi-discord"></i> Discord
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Registration Form -->
+    <div class="form-container">
+        <div class="register-card">
+
+            <div class="card-header-area">
+                <h2>REGISTRATION</h2>
+                <p>Please fill up the form to <span>register</span></p>
+            </div>
+
+            <form id="registerForm" novalidate>
+
+                <!-- Username & Email side by side -->
+                <div class="field-row">
+                    <div class="field">
+                        <label><i class="bi bi-person"></i> Username</label>
+                        <input type="text" id="username" name="username"
+                               placeholder="6–18 characters" minlength="6" maxlength="18" required>
+                        <span class="field-hint muted" id="usernameHint">Letters, numbers, underscores</span>
+                    </div>
+
+                    <div class="field">
+                        <label><i class="bi bi-envelope"></i> Email</label>
+                        <input type="email" id="email" name="email"
+                               placeholder="your@email.com" required>
+                        <span class="field-hint muted" id="emailHint">For account recovery</span>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="field">
+                    <label><i class="bi bi-lock"></i> Password</label>
+                    <div class="pw-wrap">
+                        <input type="password" id="password" name="password"
+                               placeholder="Min. 6 characters" required>
+                        <span class="pw-toggle" id="togglePassword"><i class="bi bi-eye"></i></span>
+                    </div>
+                    <div class="pw-strength">
+                        <span id="sb1"></span><span id="sb2"></span>
+                        <span id="sb3"></span><span id="sb4"></span>
+                    </div>
+                    <span class="field-hint muted" id="passwordHint">Use 8+ characters for a stronger password</span>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="field">
+                    <label><i class="bi bi-shield-lock"></i> Confirm Password</label>
+                    <div class="pw-wrap">
+                        <input type="password" id="confirmPassword" name="confirmPassword"
+                               placeholder="Repeat your password" required>
+                        <span class="pw-toggle" id="toggleConfirmPassword"><i class="bi bi-eye"></i></span>
+                    </div>
+                    <span class="field-hint muted" id="confirmHint">Must match the password above</span>
+                </div>
+
+                <hr class="form-divider">
+
+                <!-- CAPTCHA -->
+                <div class="field">
+                    <label><i class="bi bi-shield-check"></i> Type the text you see</label>
+                    <div class="captcha-row">
+                        <img src="" alt="CAPTCHA" id="captchaImage">
+                        <img id="reloadCaptchaButton" src="https://i.imgur.com/sTVaRa2.png"
+                             alt="Reload CAPTCHA" title="Reload CAPTCHA">
+                    </div>
+                    <input type="text" id="captchaInput" name="captchaInput"
+                           placeholder="Enter CAPTCHA code" required>
+                    <div class="captcha-hint"><i class="bi bi-info-circle"></i> Click the reload button for a new image</div>
+                </div>
+
+                <button type="submit" class="btn-register">Register Account</button>
+                <a href="index.html" class="btn-home">← Back to Home</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-classic">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5 class="footer-title">Stick Run Classic</h5>
+                    <p class="text-muted mb-3" style="color: #ffffff !important;">The classic stick figure multiplayer game that started it all. Run, trade, and have fun!</p>
+                    <div class="d-flex gap-3">
+                        <a href="https://discord.gg/b2RBuXVWjH" target="_blank" class="social-icon">
+                            <i class="bi bi-discord fs-5" style="color:var(--orange-primary)"></i>
+                        </a>
+                        <a href="https://www.facebook.com/trustmac.sec" target="_blank" class="social-icon">
+                            <i class="bi bi-facebook fs-5" style="color:var(--orange-primary)"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="index.html">Home</a>
+                        <a href="register.html">Register</a>
+                        <a href="https://discord.gg/F7t9cf4gUm" target="_blank">Discord</a>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="text-center pt-4 border-top border-orange">
+                <p class="text-muted mb-0"  style="color: #ffffff !important;">&copy; 2026 Stick Run Classic. All rights reserved. | Made with ❤️ by Stick Run Classic Team</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="playerio.js"></script>
+
+    <script>
+        // ── CAPTCHA ──
+        let captchaKey = null;
+
+        function loadCaptcha() {
+            PlayerIO.quickConnect.simpleGetCaptcha(
+                "trade-run-tmtxvmpwouefjfnsaho48a", 300, 50,
+                function(captcha) {
+                    document.getElementById('captchaImage').src = captcha.captchaImageUrl;
+                    captchaKey = captcha.captchaKey;
+                },
+                function(error) { console.error('Captcha load failed:', error); }
+            );
+        }
+
+        loadCaptcha();
+
+        document.getElementById('reloadCaptchaButton').addEventListener('click', function() {
+            loadCaptcha();
+            document.getElementById('captchaInput').value = '';
+        });
+
+        // ── Password toggles ──
+        function makeToggle(toggleId, inputId) {
+            document.getElementById(toggleId).addEventListener('click', function() {
+                const inp = document.getElementById(inputId);
+                const icon = this.querySelector('i');
+                if (inp.type === 'password') {
+                    inp.type = 'text';
+                    icon.className = 'bi bi-eye-slash';
+                } else {
+                    inp.type = 'password';
+                    icon.className = 'bi bi-eye';
+                }
+            });
+        }
+
+        makeToggle('togglePassword', 'password');
+        makeToggle('toggleConfirmPassword', 'confirmPassword');
+
+        // ── Live validation helpers ──
+        function setHint(id, text, cls) {
+            const el = document.getElementById(id);
+            el.textContent = text;
+            el.className = 'field-hint ' + cls;
+        }
+
+        function setValidity(inputId, valid) {
+            const inp = document.getElementById(inputId);
+            inp.classList.remove('is-valid', 'is-invalid');
+            if (valid === true)  inp.classList.add('is-valid');
+            if (valid === false) inp.classList.add('is-invalid');
+        }
+
+        // Username
+        document.getElementById('username').addEventListener('input', function() {
+            const v = this.value;
+            if (!v) { setValidity('username', null); setHint('usernameHint', 'Letters, numbers, underscores', 'muted'); return; }
+            if (v.length < 6)  { setValidity('username', false); setHint('usernameHint', 'Too short — need at least 6 characters', 'err'); return; }
+            if (v.length > 18) { setValidity('username', false); setHint('usernameHint', 'Too long — max 18 characters', 'err'); return; }
+            setValidity('username', true);
+            setHint('usernameHint', 'Looks good!', 'ok');
+        });
+
+        // Email
+        document.getElementById('email').addEventListener('input', function() {
+            const v = this.value;
+            if (!v) { setValidity('email', null); setHint('emailHint', 'For account recovery', 'muted'); return; }
+            const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+            setValidity('email', ok);
+            setHint('emailHint', ok ? 'Valid email' : 'Enter a valid email address', ok ? 'ok' : 'err');
+        });
+
+        // Password strength
+        document.getElementById('password').addEventListener('input', function() {
+            const v = this.value;
+            const bars = ['sb1','sb2','sb3','sb4'].map(id => document.getElementById(id));
+            bars.forEach(b => b.className = '');
+            if (!v) { setHint('passwordHint', 'Use 8+ characters for a stronger password', 'muted'); return; }
+            let score = 0;
+            if (v.length >= 6)  score++;
+            if (v.length >= 10) score++;
+            if (/[A-Z]/.test(v) && /[0-9]/.test(v)) score++;
+            if (/[^A-Za-z0-9]/.test(v)) score++;
+            const cls = score <= 1 ? 'weak' : score === 2 ? 'fair' : 'good';
+            for (let i = 0; i < score; i++) bars[i].className = cls;
+            const label = ['', 'Weak', 'Fair', 'Good', 'Strong'][score];
+            setHint('passwordHint', label + ' password', cls === 'weak' ? 'err' : cls === 'fair' ? 'muted' : 'ok');
+
+            // re-check confirm
+            const cv = document.getElementById('confirmPassword').value;
+            if (cv) checkConfirm(cv, v);
+        });
+
+        function checkConfirm(cv, pv) {
+            const match = cv === pv;
+            setValidity('confirmPassword', match);
+            setHint('confirmHint', match ? 'Passwords match!' : 'Passwords do not match', match ? 'ok' : 'err');
+        }
+
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            if (!this.value) { setValidity('confirmPassword', null); setHint('confirmHint', 'Must match the password above', 'muted'); return; }
+            checkConfirm(this.value, document.getElementById('password').value);
+        });
+
+        // ── Form submit ──
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username        = document.getElementById('username').value.trim();
+            const email           = document.getElementById('email').value.trim();
+            const password        = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const captchaValue    = document.getElementById('captchaInput').value;
+            if (username.length < 6 || username.length > 18) {
+                document.getElementById('username').focus();
+                setHint('usernameHint', 'Username must be 6–18 characters.', 'err');
+                return;
+            }
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long!');
+                return;
+            }
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            PlayerIO.authenticate(
+                "trade-run-tmtxvmpwouefjfnsaho48a",
+                "public",
+                { register: "true", username, password, email, captchaKey, captchaValue },
+                {},
+                function(client) {
+                    alert(`Registration successful!\nWelcome, ${username}!`);
+                    window.location.href = 'index.html';
+                },
+                function(error) {
+                    alert('Registration failed: ' + (error.message || error));
+                    loadCaptcha();
+                    document.getElementById('captchaInput').value = '';
+                }
+            );
+        });
+
+        // ── Security ──
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12') { e.preventDefault(); return; }
+            if (e.ctrlKey && e.shiftKey && ['I','i','J','j'].includes(e.key)) { e.preventDefault(); return; }
+            if (e.ctrlKey && ['U','u'].includes(e.key)) { e.preventDefault(); }
+        });
+    </script>
+</body>
+</html>

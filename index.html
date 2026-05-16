@@ -1,0 +1,3018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SRC - Mainmenu</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/images/src1.png" type="image/x-icon">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts - Stick Run Classic style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- PlayerIO SDK -->
+    <script src="https://playerio-public.s3.amazonaws.com/html/js/playerio.js"></script>
+
+    <!-- Custom Stick Run Classic Theme CSS -->
+    <style>
+        /* Orange Theme Color Palette */
+        :root {
+            --orange-dark: #1a0b0e;
+            --orange-darker: #0f0507;
+            --orange-primary: #ff6b00;
+            --orange-secondary: #ff9500;
+            --orange-accent: #ff3d00;
+            --orange-yellow: #ffb300;
+            --orange-light: #ffcc80;
+            --orange-bg: #1c0f0a;
+            --orange-card: #2c1810;
+            --orange-text: #f5e6d3;
+            --orange-gray: #d7ccc8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--orange-darker), var(--orange-bg));
+            color: var(--orange-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Game Features Section Styling */
+        #features {
+            position: relative;
+        }
+
+        /* Feature Cards - Fixed Alignment */
+        .feature-card {
+            background: rgba(44, 24, 16, 0.7);
+            border: 2px solid rgba(255, 107, 0, 0.3);
+            border-radius: 15px;
+            padding: 2rem 1.5rem;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 320px;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--orange-primary);
+            box-shadow: 0 15px 40px rgba(255, 107, 0, 0.5);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 107, 0, 0.1);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: rgba(255, 107, 0, 0.2);
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 107, 0, 0.4);
+        }
+
+        .feature-icon i {
+            font-size: 2.5rem;
+        }
+
+        .feature-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--orange-light);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-description {
+            color: var(--orange-gray);
+            line-height: 1.6;
+            margin-bottom: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Feature Card Background Image */
+        .feature-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            border-radius: 13px;
+            z-index: 1;
+        }
+
+        .feature-card:hover .feature-bg-image {
+            opacity: 0.3;
+        }
+
+        /* Feature card specific adjustments */
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 0, 0.1), transparent);
+            transition: left 0.7s ease;
+            z-index: 1;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        /* Overlay for better text readability */
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                rgba(44, 24, 16, 0.9) 0%,
+                rgba(44, 24, 16, 0.8) 30%,
+                rgba(44, 24, 16, 0.7) 100%);
+            border-radius: 13px;
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover::after {
+            background: linear-gradient(to bottom, 
+                rgba(44, 24, 16, 0.95) 0%,
+                rgba(44, 24, 16, 0.85) 30%,
+                rgba(44, 24, 16, 0.75) 100%);
+        }
+
+        /* Rankings Section Styling */
+        #rankings {
+            padding: 4rem 0;
+        }
+
+        .ranking-card {
+            background: rgba(44, 24, 16, 0.8);
+            border: 2px solid rgba(255, 107, 0, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .ranking-card:hover {
+            border-color: var(--orange-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.2);
+        }
+
+        .ranking-card.gold {
+            border-color: #ffd700;
+            background: linear-gradient(135deg, rgba(44, 24, 16, 0.9), rgba(255, 215, 0, 0.1));
+        }
+
+        .ranking-card.silver {
+            border-color: #c0c0c0;
+            background: linear-gradient(135deg, rgba(44, 24, 16, 0.9), rgba(192, 192, 192, 0.1));
+        }
+
+        .ranking-card.bronze {
+            border-color: #cd7f32;
+            background: linear-gradient(135deg, rgba(44, 24, 16, 0.9), rgba(205, 127, 50, 0.1));
+        }
+
+        .ranking-position {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--orange-yellow);
+            width: 50px;
+            text-align: center;
+        }
+
+        .ranking-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 107, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 1rem;
+        }
+
+        .ranking-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .ranking-avatar i {
+            font-size: 1.5rem;
+            color: var(--orange-primary);
+        }
+
+        .ranking-info {
+            flex: 1;
+        }
+
+        .ranking-name {
+            font-weight: 600;
+            color: var(--orange-light);
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .ranking-score {
+            color: var(--orange-gray);
+            font-size: 0.9rem;
+        }
+
+        .ranking-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: rgba(255, 107, 0, 0.2);
+            color: var(--orange-primary);
+        }
+
+        .ranking-tabs {
+            background: rgba(44, 24, 16, 0.7);
+            border-radius: 12px;
+            padding: 0.5rem;
+            margin-bottom: 2rem;
+            border: 2px solid rgba(255, 107, 0, 0.3);
+        }
+
+        .ranking-tab {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: var(--orange-gray);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+        }
+
+        .ranking-tab.active {
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .ranking-tab:hover:not(.active) {
+            background: rgba(255, 107, 0, 0.1);
+            color: var(--orange-primary);
+        }
+
+        .ranking-loading {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .ranking-loading i {
+            font-size: 3rem;
+            color: var(--orange-primary);
+            margin-bottom: 1rem;
+        }
+
+        .ranking-loading-text {
+            color: var(--orange-gray);
+        }
+
+        .ranking-error {
+            text-align: center;
+            padding: 2rem;
+            color: #ff6b6b;
+        }
+
+        /* Mobile adjustments for feature cards */
+        @media (max-width: 768px) {
+            .feature-card {
+                min-height: 280px;
+                padding: 1.5rem 1rem;
+            }
+            
+            .feature-icon {
+                width: 70px;
+                height: 70px;
+                margin-bottom: 1rem;
+            }
+            
+            .feature-icon i {
+                font-size: 2rem;
+            }
+            
+            .feature-title {
+                font-size: 1.3rem;
+            }
+            
+            .feature-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .ranking-card {
+                padding: 1rem;
+            }
+
+            .ranking-position {
+                font-size: 1.2rem;
+                width: 40px;
+            }
+
+            .ranking-avatar {
+                width: 40px;
+                height: 40px;
+                margin: 0 0.75rem;
+            }
+
+            .ranking-name {
+                font-size: 1rem;
+            }
+
+            .ranking-tab {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .feature-card {
+                min-height: 250px;
+                padding: 1.25rem 0.75rem;
+            }
+            
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 0.75rem;
+            }
+            
+            .feature-icon i {
+                font-size: 1.75rem;
+            }
+            
+            .feature-title {
+                font-size: 1.2rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .ranking-card {
+                padding: 0.75rem;
+            }
+
+            .ranking-position {
+                font-size: 1rem;
+                width: 30px;
+            }
+
+            .ranking-avatar {
+                width: 35px;
+                height: 35px;
+                margin: 0 0.5rem;
+            }
+
+            .ranking-avatar i {
+                font-size: 1.2rem;
+            }
+
+            .ranking-name {
+                font-size: 0.9rem;
+            }
+
+            .ranking-score {
+                font-size: 0.8rem;
+            }
+
+            .ranking-tabs {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .ranking-tab {
+                width: 100%;
+            }
+        }
+
+        /* Stick Run Classic Navigation - Orange Theme */
+        .navbar-classic {
+            background: rgba(44, 24, 16, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--orange-primary);
+            box-shadow: 0 4px 20px rgba(255, 107, 0, 0.3);
+            padding: 0.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand-classic img {
+            height: 40px;
+            filter: drop-shadow(0 0 15px rgba(255, 107, 0, 0.6));
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand-classic img:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-link-classic {
+            color: var(--orange-gray) !important;
+            font-weight: 600;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.25rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .nav-link-classic:hover {
+            background: rgba(255, 107, 0, 0.2);
+            color: var(--orange-primary) !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-link-classic.active {
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary));
+            color: white !important;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        /* Hero Section - Orange Theme */
+        .hero-classic {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 3rem 0;
+        }
+
+        /* Background images container */
+        .background-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .background-image.active {
+            opacity: 1;
+        }
+
+        .hero-classic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(rgba(26, 11, 7, 0.8), rgba(44, 24, 16, 0.9)),
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 0, 0.15), transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(255, 149, 0, 0.15), transparent 40%),
+                radial-gradient(circle at 40% 80%, rgba(255, 179, 0, 0.15), transparent 40%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-classic > .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title-classic {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary), var(--orange-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(255, 107, 0, 0.3);
+        }
+
+        .hero-subtitle-classic {
+            font-size: 1.25rem;
+            color: var(--orange-gray);
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+        /* Play Now Button - Compact Style */
+.btn-playnow {
+    background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary));
+    color: white;
+    padding: 0.45rem 1.2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 10px rgba(255, 107, 0, 0.3);
+}
+
+.btn-playnow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.5);
+    background: linear-gradient(135deg, #ff7b1a, #ffaa00);
+    color: white;
+}
+
+/* Mobile adjustment */
+@media (max-width: 992px) {
+    .btn-playnow {
+        margin: 0.5rem 0 0.5rem 0;
+        display: inline-block;
+        text-align: center;
+        width: auto;
+    }
+}
+        /* Buttons - Orange Theme */
+        .btn-classic {
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .btn-classic-primary {
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .btn-classic-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255, 107, 0, 0.6);
+            background: linear-gradient(135deg, var(--orange-secondary), var(--orange-primary));
+        }
+
+        .btn-classic-secondary {
+            background: transparent;
+            color: var(--orange-yellow);
+            border: 2px solid var(--orange-yellow);
+        }
+
+        .btn-classic-secondary:hover {
+            background: rgba(255, 179, 0, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255, 179, 0, 0.4);
+        }
+
+        /* Cards - Orange Theme */
+        .card-classic {
+            background: rgba(44, 24, 16, 0.7);
+            border: 2px solid rgba(255, 107, 0, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-classic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 0, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .card-classic:hover::before {
+            left: 100%;
+        }
+
+        .card-classic:hover {
+            transform: translateY(-5px);
+            border-color: var(--orange-primary);
+            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.3);
+        }
+
+        /* Grid System */
+        .grid-container {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .grid-5 {
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
+
+        /* Sections */
+        .section-classic {
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Item Cards - Orange Theme */
+        .item-card {
+            background: rgba(44, 24, 16, 0.8);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 107, 0, 0.2);
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--orange-primary);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.4);
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin: 0 auto 1rem;
+            filter: drop-shadow(0 4px 8px rgba(255, 107, 0, 0.3));
+        }
+
+        .item-name {
+            font-weight: 700;
+            color: var(--orange-light);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .item-price {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--orange-yellow);
+            font-weight: 700;
+        }
+
+        /* Rarity Badges - Orange Theme */
+        .rarity-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .rarity-unique {
+            background: linear-gradient(135deg, #ff6b00, #ff9500);
+            color: white;
+        }
+
+        .rarity-rare {
+            background: linear-gradient(135deg, #ff3d00, #ff6b00);
+            color: white;
+        }
+
+        .rarity-common {
+            background: linear-gradient(135deg, #8d6e63, #a1887f);
+            color: white;
+        }
+
+        /* Server Status - Orange Theme */
+        .server-status {
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.1), rgba(255, 179, 0, 0.1));
+            border: 2px solid var(--orange-primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .status-online {
+            color: var(--orange-primary);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        /*Icon Logo*/
+      .navbar-brand-classic {
+    position: relative;
+}
+
+.navbar-brand-classic img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 15px rgba(255, 107, 0, 0.6));
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    padding: 2px;
+    background: 
+        linear-gradient(var(--orange-card), var(--orange-card)) padding-box,
+        linear-gradient(135deg, var(--orange-primary), var(--orange-yellow)) border-box;
+    animation: logo-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes logo-glow {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 107, 0, 0.3);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(255, 107, 0, 0.7);
+    }
+}
+
+.navbar-brand-classic img:hover {
+    transform: scale(1.1);
+    animation: logo-rotate 0.5s ease;
+}
+
+@keyframes logo-rotate {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.1);
+    }
+    100% {
+        transform: rotate(360deg) scale(1.1);
+    }
+}
+
+        /* Icons - Orange Theme */
+        .text-purple { color: var(--orange-primary) !important; }
+        .text-pink { color: var(--orange-secondary) !important; }
+        .text-cyan { color: var(--orange-yellow) !important; }
+        .text-blue { color: var(--orange-light) !important; }
+        .text-green { color: #8bc34a !important; }
+        .text-success { color: var(--orange-primary) !important; }
+        .text-warning { color: var(--orange-yellow) !important; }
+
+        /* Footer - Orange Theme */
+        .footer-classic {
+            background: rgba(26, 11, 7, 0.95);
+            border-top: 3px solid var(--orange-primary);
+            padding: 3rem 0 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-title {
+            color: var(--orange-yellow);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .footer-links a {
+            color: var(--orange-gray);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--orange-primary);
+            padding-left: 5px;
+        }
+
+        .border-purple {
+            border-color: var(--orange-primary) !important;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero-title-classic {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle-classic {
+                font-size: 1.1rem;
+            }
+            
+            .section-classic {
+                padding: 2rem 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+            
+            .grid-3, .grid-4, .grid-5 {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+            
+            .item-card {
+                height: 250px;
+            }
+            
+            .slider-dots {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .slider-dot {
+                width: 8px;
+                height: 8px;
+            }
+            
+            .background-dots {
+                gap: 6px;
+            }
+            
+            .background-dot {
+                width: 8px;
+                height: 8px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title-classic {
+                font-size: 2rem;
+            }
+            
+            .btn-classic {
+                padding: 0.5rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .grid-container {
+                gap: 1rem;
+            }
+            
+            .image-slider {
+                height: 250px;
+            }
+            
+            .section-title {
+                font-size: 1.75rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 107, 0, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(255, 107, 0, 0.8);
+            }
+        }
+
+        .glowing {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        /* Text colors for muted text */
+        .text-muted {
+            color: var(--orange-gray) !important;
+        }
+
+        /* Image Slider Styles */
+        .image-slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .image-slider {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .slider-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            filter: drop-shadow(0 0 30px rgba(255, 107, 0, 0.5));
+        }
+
+        .slider-image.active {
+            opacity: 1;
+        }
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 107, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background-color: var(--orange-primary);
+            transform: scale(1.2);
+        }
+
+        .slider-dot:hover {
+            background-color: rgba(255, 107, 0, 0.6);
+        }
+        /* Horizontal Logo Layout */
+.logo-horizontal {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(255, 107, 0, 0.6));
+    border: 2px solid var(--orange-primary);
+    padding: 3px;
+    background: var(--orange-darker);
+    transition: all 0.3s ease;
+}
+
+.logo-horizontal:hover .logo-img {
+    transform: rotate(360deg);
+    border-color: var(--orange-yellow);
+    filter: drop-shadow(0 0 15px rgba(255, 107, 0, 0.8));
+}
+
+.logo-full-text {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 1.3rem;
+    background: linear-gradient(135deg, var(--orange-primary), var(--orange-yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(255, 107, 0, 0.3);
+    position: relative;
+    padding: 5px 0;
+}
+
+.logo-full-text::before {
+    content: 'STICK RUN CLASSIC';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--orange-accent);
+    z-index: -1;
+    opacity: 0.7;
+    animation: text-glitch 3s infinite;
+}
+
+@keyframes text-glitch {
+    0%, 100% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-1px, 1px);
+    }
+    40% {
+        transform: translate(-1px, -1px);
+    }
+    60% {
+        transform: translate(1px, 1px);
+    }
+    80% {
+        transform: translate(1px, -1px);
+    }
+}
+        /* Background Dots */
+        .background-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 3;
+        }
+
+        .background-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 107, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .background-dot.active {
+            background-color: var(--orange-primary);
+            transform: scale(1.3);
+        }
+
+        .background-dot:hover {
+            background-color: rgba(255, 107, 0, 0.6);
+        }
+
+        /* ============================================
+           TEAM SECTION - ORANGE THEME
+           ============================================ */
+
+        /* Team Background - Removed as requested */
+
+        /* Team Hero Section */
+        .team-hero-classic {
+            position: relative;
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 4rem 0;
+        }
+
+        .team-hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .team-badge-classic {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 2rem;
+            background: rgba(255, 107, 0, 0.1);
+            border: 2px solid rgba(255, 107, 0, 0.3);
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            animation: team-badge-float 3s ease-in-out infinite;
+        }
+
+        @keyframes team-badge-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .team-badge-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-yellow));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            animation: team-icon-spin 10s linear infinite;
+        }
+
+        @keyframes team-icon-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .team-title-classic {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin: 1.5rem 0;
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-yellow), var(--orange-accent));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: team-gradient-shift 5s ease infinite;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-shadow: 0 0 30px rgba(255, 107, 0, 0.5);
+        }
+
+        @keyframes team-gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .team-subtitle-classic {
+            font-size: 1.25rem;
+            color: var(--orange-gray);
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        /* Team Stats */
+        .team-stats-classic {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .team-stat-card {
+            background: rgba(44, 24, 16, 0.6);
+            border: 2px solid rgba(255, 107, 0, 0.3);
+            border-radius: 20px;
+            padding: 1.5rem;
+            min-width: 180px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: team-badge-float 3s ease-in-out infinite;
+        }
+
+        .team-stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 107, 0, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .team-stat-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 107, 0, 0.8);
+            box-shadow: 0 20px 40px rgba(255, 107, 0, 0.3);
+        }
+
+        .team-stat-card:hover::before {
+            left: 100%;
+        }
+
+        .team-stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .team-stat-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--orange-light);
+            display: block;
+        }
+
+        .team-stat-label {
+            font-size: 0.875rem;
+            color: var(--orange-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Team Grid */
+        .team-grid-classic {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding: 3rem 0;
+        }
+
+        /* Team Member Card */
+        .team-member-card {
+            position: relative;
+            background: rgba(44, 24, 16, 0.7);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(255, 107, 0, 0.2);
+            animation: team-card-appear 0.6s ease-out backwards;
+        }
+
+        /* Role Colors */
+        .team-member-card[data-role="founder"] {
+            --role-color: var(--orange-primary);
+            --role-color-alpha: rgba(255, 107, 0, 0.3);
+        }
+
+        .team-member-card[data-role="developer"] {
+            --role-color: var(--orange-yellow);
+            --role-color-alpha: rgba(255, 179, 0, 0.3);
+        }
+
+        /* Per-member background layer */
+        .team-member-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+            opacity: 0.80;
+            filter: brightness(0.5);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+
+        .team-member-card:hover .team-member-bg {
+            opacity: 0.5;
+            transform: scale(1.03);
+        }
+
+        .team-member-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--role-color), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 2;
+        }
+
+        .team-member-card:hover::before {
+            opacity: 1;
+        }
+
+        .team-member-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--role-color);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                0 0 50px var(--role-color-alpha);
+        }
+
+        /* Avatar Section */
+        .team-avatar-section {
+            position: relative;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3;
+        }
+
+        .team-avatar-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        .team-avatar-rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .team-avatar-ring {
+            position: absolute;
+            border: 2px solid var(--role-color);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: team-ring-pulse 3s ease-in-out infinite;
+        }
+
+        .team-avatar-ring:nth-child(1) {
+            width: 160px;
+            height: 160px;
+            top: -79px;
+            left: -80px;
+            animation-delay: 0s;
+        }
+
+        .team-avatar-ring:nth-child(2) {
+            width: 180px;
+            height: 180px;
+            top: -88px;
+            left: -90px;
+            animation-delay: 0.5s;
+        }
+
+        .team-avatar-ring:nth-child(3) {
+            width: 200px;
+            height: 200px;
+            top: -100px;
+            left: -100px;
+            animation-delay: 1s;
+        }
+
+        @keyframes team-ring-pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.6;
+            }
+        }
+
+        .team-member-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--role-color);
+            position: relative;
+            z-index: 3;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px var(--role-color-alpha);
+        }
+
+        .team-member-card:hover .team-member-avatar {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 50px var(--role-color);
+        }
+
+        /* Member Info */
+        .team-member-info {
+            padding: 0 2rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .team-member-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--orange-light);
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .team-member-name::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--role-color);
+            transition: width 0.3s ease;
+        }
+
+        .team-member-card:hover .team-member-name::after {
+            width: 100%;
+        }
+
+        .team-member-discord {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(88, 101, 242, 0.2);
+            border: 1px solid rgba(88, 101, 242, 0.4);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            color: var(--orange-gray);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .team-member-discord:hover {
+            background: rgba(88, 101, 242, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Role Badges */
+        .team-role-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .team-role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-role-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .team-role-badge:hover::before {
+            left: 100%;
+        }
+
+        .team-role-badge:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Role Badge Colors */
+        .team-role-badge.founder {
+            background: rgba(255, 107, 0, 0.2);
+            border-color: var(--orange-primary);
+            color: var(--orange-light);
+        }
+
+        .team-role-badge.developer {
+            background: rgba(255, 179, 0, 0.2);
+            border-color: var(--orange-yellow);
+            color: var(--orange-light);
+        }
+
+        /* Social Links */
+        .team-social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .team-social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 107, 0, 0.1);
+            border: 2px solid rgba(255, 107, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--orange-gray);
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-social-link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 107, 0, 0.3);
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+        }
+
+        .team-social-link:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+
+        .team-social-link:hover {
+            transform: translateY(-5px) rotate(360deg);
+            border-color: var(--role-color);
+            color: var(--orange-light);
+            box-shadow: 0 10px 20px var(--role-color-alpha);
+        }
+
+        .team-social-link i {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Loading Animation */
+        @keyframes team-card-appear {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .team-member-card:nth-child(1) { animation-delay: 0.1s; }
+        .team-member-card:nth-child(2) { animation-delay: 0.2s; }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .team-title-classic {
+                font-size: 3rem;
+            }
+            
+            .team-stats-classic {
+                gap: 1rem;
+            }
+            
+            .team-stat-card {
+                min-width: 140px;
+                padding: 1.25rem;
+            }
+            
+            .team-grid-classic {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .team-member-card {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .team-title-classic {
+                font-size: 2.5rem;
+            }
+            
+            .team-subtitle-classic {
+                font-size: 1rem;
+            }
+            
+            .team-avatar-container {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .team-member-avatar {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        /* Mobile Selection Modal Styles */
+        .mobile-selection-modal .modal-content {
+            background: rgba(44, 24, 16, 0.95);
+            border: 2px solid var(--orange-primary);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .mobile-selection-modal .modal-header {
+            border-bottom: 1px solid rgba(255, 107, 0, 0.3);
+        }
+
+        .mobile-selection-modal .modal-title {
+            color: var(--orange-light);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .mobile-selection-modal .btn-close {
+            filter: invert(1);
+        }
+
+        .mobile-option-card {
+            background: rgba(44, 24, 16, 0.6);
+            border: 2px solid rgba(255, 107, 0, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .mobile-option-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--orange-primary);
+            box-shadow: 0 10px 25px rgba(255, 107, 0, 0.3);
+        }
+
+        .mobile-option-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--orange-yellow);
+        }
+
+        .mobile-option-card h5 {
+            color: var(--orange-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .mobile-option-card .badge {
+            background: rgba(255, 107, 0, 0.2);
+            color: var(--orange-primary);
+            font-size: 0.75rem;
+        }
+
+        .mobile-option-card p {
+            color: var(--orange-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Download Progress Bar */
+        .download-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 107, 0, 0.2);
+            z-index: 9999;
+            display: none;
+        }
+        
+        .download-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--orange-primary), var(--orange-yellow));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+
+    <!-- Mobile Navigation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const navbarToggle = document.querySelector('.navbar-toggler');
+            const navbarCollapse = document.querySelector('.navbar-collapse');
+            
+            if (navbarToggle) {
+                navbarToggle.addEventListener('click', function() {
+                    navbarCollapse.classList.toggle('show');
+                });
+            }
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.navbar') && !event.target.closest('.navbar-toggler')) {
+                    navbarCollapse.classList.remove('show');
+                }
+            });
+            
+            // Smooth scrolling for anchor links - Updated to scroll to top for Home/Logo
+            document.querySelectorAll('a[href="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId !== '#') {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            // Add hover effects to cards
+            const cards = document.querySelectorAll('.card-classic, .item-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-5px)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Stick Run Classic - Classic Stick Figure Multiplayer Game">
+    <meta name="description" content="Play Stick Run Classic - The original stick figure multiplayer game with trading, customization, and endless running action!">
+    <meta name="keywords" content="stickrun, stick run classic, stick figure game, multiplayer game, online game, stick realm">
+    <meta name="author" content="Stick Realm Team">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#ff6b00">
+</head>
+<body>
+    <!-- Download Progress Bar -->
+    <div class="download-progress" id="downloadProgress">
+        <div class="download-progress-bar" id="downloadProgressBar"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-classic">
+        <div class="container">
+            <a class="navbar-brand navbar-brand-classic" href="#">
+    <div class="logo-horizontal">
+        <img src="/images/src.png" alt="Stick Run Classic" class="logo-img">
+        <span class="logo-full-text">STICK RUN CLASSIC</span>
+    </div>
+</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+            <a class="nav-link nav-link-classic active" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-link-classic" href="#items">Items</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-link-classic" href="#rankings">Rankings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-link-classic" href="#team">Team</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-link-classic" href="#download">Download</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-link-classic" href="register.html">Register</a>
+        </li>
+    </ul>
+   <!-- PLAY NOW BUTTON - Smaller version -->
+<a href="https://stickrunclassic-singleplayer.netlify.app" target="_blank" class="btn-playnow ms-3" id="playNowBtn">
+    <i class="bi bi-controller me-1"></i>Play
+</a>
+</div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-classic">
+        <!-- Background Slider -->
+        <div class="background-slider">
+            <div class="background-image active" style="background-image: url('/images/Background.png');"></div>
+            <div class="background-image" style="background-image: url('/images/Background theme1.png');"></div>
+            <div class="background-image" style="background-image: url('/images/Background theme2.png');"></div>
+            <div class="background-image" style="background-image: url('/images/Background theme3.png');"></div>
+            <div class="background-image" style="background-image: url('/images/Background theme4.png');"></div>
+            <div class="background-image" style="background-image: url('/images/Background theme5.png');"></div>
+            <div class="background-image" style="background-image: url('/images/Background theme6.png');"></div>
+        </div>
+        
+        <!-- Background Navigation Dots -->
+        <div class="background-dots">
+            <div class="background-dot active" data-index="0"></div>
+            <div class="background-dot" data-index="1"></div>
+            <div class="background-dot" data-index="2"></div>
+            <div class="background-dot" data-index="3"></div>
+            <div class="background-dot" data-index="4"></div>
+            <div class="background-dot" data-index="5"></div>
+            <div class="background-dot" data-index="6"></div>
+        </div>
+        
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="hero-title-classic">STICK RUN CLASSIC</h1>
+                    <p class="hero-subtitle-classic">
+                        Experience the classic stick figure multiplayer game! Run, jump, trade, and customize your character in this addictive gaming adventure.
+                    </p>
+                    <div class="d-flex gap-3">
+                      <a href="https://discord.gg/F7t9cf4gUm" class="btn btn-classic btn-classic-primary">
+    <i class="bi bi-controller me-2"></i>Join Discord Now!
+</a>
+                        <a href="#download" class="btn btn-classic btn-classic-secondary">
+                            <i class="bi bi-download me-2"></i>Download
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="image-slider-container">
+                        <div class="image-slider">
+                            <!-- All 6 character images in the slider -->
+                            <img src="/images/angel.png"
+                                 alt="Angel Character" 
+                                 class="slider-image active floating">
+                            <img src="/images/ricknmorty.png"
+                                 alt="Rick and Morty Character" 
+                                 class="slider-image floating">
+                            <img src="/images/cupid.png"
+                                 alt="Cupid Character" 
+                                 class="slider-image floating">
+                            <img src="/images/darklord.png"
+                                 alt="Dark Lord Character" 
+                                 class="slider-image floating">
+                            <img src="/images/neon.png"
+                                 alt="Neon Character" 
+                                 class="slider-image floating">
+                            <img src="/images/zombie.png"
+                                 alt="Zombie Character" 
+                                 class="slider-image floating">
+                        </div>
+                        <div class="slider-dots">
+                            <!-- Navigation dots for each character image -->
+                            <div class="slider-dot active" data-index="0"></div>
+                            <div class="slider-dot" data-index="1"></div>
+                            <div class="slider-dot" data-index="2"></div>
+                            <div class="slider-dot" data-index="3"></div>
+                            <div class="slider-dot" data-index="4"></div>
+                            <div class="slider-dot" data-index="5"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Server Status -->
+    <section class="section-classic">
+        <div class="container">
+            <div class="server-status">
+                <div class="row align-items-center">
+                    <div class="col-md-4 text-center">
+                        <i class="bi bi-server fs-1 text-success"></i>
+                        <h3 class="status-online mt-2">ONLINE</h3>
+                        <p class="text-muted">Server Status</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <i class="bi bi-people-fill fs-1 text-purple"></i>
+                        <h3 class="text-light mt-2">635</h3>
+                        <p class="text-muted">Registered Players</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <i class="bi bi-controller fs-1 text-warning"></i>
+                        <h3 class="text-light mt-2">24/7</h3>
+                        <p class="text-muted">Active Gameplay</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Top Items -->
+<section id="items" class="section-classic">
+    <div class="container">
+        <h2 class="section-title">MOST VALUABLE ITEMS</h2>
+        
+        <div class="grid-container grid-5">
+            <!-- Item 1 -->
+            <div class="item-card">
+                <span class="rarity-badge rarity-unique mb-2">#1</span>
+                <img src="/images/tits.png" 
+                     alt="Titties" 
+                     class="item-image">
+                <h5 class="item-name">Titties</h5>
+                <div class="item-price">
+                    <i class="bi bi-coin me-1"></i>Not Available
+                </div>
+            </div>
+            
+            <!-- Item 2 -->
+            <div class="item-card">
+                <span class="rarity-badge rarity-unique mb-2">#2</span>
+                <img src="/images/bsg.png" 
+                     alt="Blue Summer Glasses" 
+                     class="item-image">
+                <h5 class="item-name">Blue Summer Glasses</h5>
+                <div class="item-price">
+                    <i class="bi bi-coin me-1"></i>Not Available
+                </div>
+            </div>
+            
+            <!-- Item 3 -->
+            <div class="item-card">
+                <span class="rarity-badge rarity-unique mb-2">#3</span>
+                <img src="/images/bsc.png" 
+                     alt="Blue Summer Cap" 
+                     class="item-image">
+                <h5 class="item-name">Blue Summer Cap</h5>
+                <div class="item-price">
+                    <i class="bi bi-coin me-1"></i>Not Available
+                </div>
+            </div>
+            
+            <!-- Item 4 -->
+            <div class="item-card">
+                <span class="rarity-badge rarity-unique mb-2">#4</span>
+                <img src="/images/ccs.png" 
+                     alt="Chaos Control Shoes" 
+                     class="item-image">
+                <h5 class="item-name">Chaos Control Shoes</h5>
+                <div class="item-price">
+                    <i class="bi bi-coin me-1"></i>Not Available
+                </div>
+            </div>
+            
+            <!-- Item 5 -->
+            <div class="item-card">
+                <span class="rarity-badge rarity-unique mb-2">#5</span>
+                <img src="/images/Tb.png"
+                     alt="Tanners Bow" 
+                     class="item-image">
+                <h5 class="item-name">Tanner's Bow</h5>
+                <div class="item-price">
+                    <i class="bi bi-coin me-1"></i>Not Available
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="https://testkotomuna.my.canva.site/src-pricelist" target="_blank" class="btn btn-classic btn-classic-primary">
+                <i class="bi bi-box-seam-fill me-2"></i>View All Items
+            </a>
+        </div>
+    </div>
+</section>
+
+    <!-- Rankings Section -->
+    <section id="rankings" class="section-classic" style="background: rgba(255, 107, 0, 0.05);">
+        <div class="container">
+            <h2 class="section-title">TOP PLAYER RANKINGS</h2>
+            
+            <!-- Ranking Tabs -->
+            <div class="ranking-tabs d-flex justify-content-center mb-4">
+                <button class="ranking-tab active" data-type="active">
+                    <i class="bi bi-clock-history me-2"></i>Most Active
+                </button>
+                <button class="ranking-tab" data-type="highscore">
+                    <i class="bi bi-trophy me-2"></i>High Score
+                </button>
+                <button class="ranking-tab" data-type="boxjumps">
+                    <i class="bi bi-bar-chart me-2"></i>Box Jumps
+                </button>
+            </div>
+
+            <!-- Rankings Container -->
+            <div id="rankings-container">
+                <div class="ranking-loading">
+                    <i class="bi bi-hourglass-split"></i>
+                    <p class="ranking-loading-text">Loading rankings...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Features -->
+    <section id="features" class="section-classic">
+        <div class="container">
+            <h2 class="section-title">GAME FEATURES</h2>
+            
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <!-- Background Image for Classic Gameplay -->
+                        <div class="feature-bg-image" style="background-image: url('classicgameplay.png');"></div>
+                        
+                        <div class="feature-icon text-purple">
+                            <i class="bi bi-controller fs-1"></i>
+                        </div>
+                        
+                        <h3 class="feature-title">Classic Gameplay</h3>
+                        
+                        <p class="feature-description">
+                            Experience the original Stick Run gameplay with improved graphics and smoother controls.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <!-- Background Image for Multiplayer -->
+                        <div class="feature-bg-image" style="background-image: url('multiplayer.png');"></div>
+                        
+                        <div class="feature-icon text-pink">
+                            <i class="bi bi-people-fill fs-1"></i>
+                        </div>
+                        
+                        <h3 class="feature-title">Multiplayer</h3>
+                        
+                        <p class="feature-description">
+                            Play with friends and other players from around the world in real-time multiplayer matches.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <!-- Background Image for Trading System -->
+                        <div class="feature-bg-image" style="background-image: url('trading.png');"></div>
+                        
+                        <div class="feature-icon text-cyan">
+                            <i class="bi bi-shop fs-1"></i>
+                        </div>
+                        
+                        <h3 class="feature-title">Trading System</h3>
+                        
+                        <p class="feature-description">
+                            Trade items with other players in the marketplace and build your collection.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="section-classic" style="background: rgba(255, 107, 0, 0.02);">
+        <!-- Team Hero Section -->
+        <div class="team-hero-classic">
+            <div class="container">
+                <div class="team-hero-content">
+                    <div class="team-badge-classic">
+                        <div class="team-badge-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <span style="font-weight: 700; font-size: 1.1rem; color: var(--orange-light);">STICK RUN CLASSIC TEAM</span>
+                    </div>
+                    
+                    <h1 class="team-title-classic">
+                        OUR TEAM
+                    </h1>
+                    
+                    <p class="team-subtitle-classic">
+                        <i class="bi bi-controller"></i>
+                        The Masters Behind Stick Run Classic
+                        <i class="bi bi-controller"></i>
+                    </p>
+                    
+                    <!-- Team Stats -->
+                    <div class="team-stats-classic">
+                        <div class="team-stat-card">
+                            <div class="team-stat-icon">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+                            <span class="team-stat-number">2</span>
+                            <span class="team-stat-label">Team Members</span>
+                        </div>
+                        
+                        <div class="team-stat-card">
+                            <div class="team-stat-icon">
+                                <i class="bi bi-trophy-fill"></i>
+                            </div>
+                            <span class="team-stat-number">PRO</span>
+                            <span class="team-stat-label">Skill Level</span>
+                        </div>
+                        
+                        <div class="team-stat-card">
+                            <div class="team-stat-icon">
+                                <i class="bi bi-fire"></i>
+                            </div>
+                            <span class="team-stat-number">100%</span>
+                            <span class="team-stat-label">Dedication</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Grid Section -->
+        <div class="container" style="padding: 4rem 0;">
+            <div class="team-grid-classic">
+                <!-- Founder - Manuel Otto -->
+                <div class="team-member-card" data-role="founder">
+                    <!-- Background Image -->
+                    <div class="team-member-bg"
+                         style="background-image: url('https://images.unsplash.com/photo-1617791160588-241658c0f566?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');">
+                    </div>
+                    
+                    <!-- Avatar Section -->
+                    <div class="team-avatar-section">
+                        <div class="team-avatar-container">
+                            <div class="team-avatar-rings">
+                                <div class="team-avatar-ring"></div>
+                                <div class="team-avatar-ring"></div>
+                                <div class="team-avatar-ring"></div>
+                            </div>
+                            
+                            <!-- Founder Avatar - Updated with Manuel.jpg -->
+                            <img src="/images/Manuel.jpg" 
+                                 alt="Manuel Otto" 
+                                 class="team-member-avatar">
+                        </div>
+                    </div>
+                    
+                    <!-- Member Info -->
+                    <div class="team-member-info">
+                        <h3 class="team-member-name">
+                            Manuel Otto
+                        </h3>
+                        
+                        <div class="team-member-discord">
+                            <i class="bi bi-discord"></i>
+                            <span>Manuel Otto</span>
+                        </div>
+                        
+                        <!-- Role Badges -->
+                        <div class="team-role-badges">
+                            <span class="team-role-badge founder">
+                                <i class="bi bi-crown-fill"></i>
+                                Founder
+                            </span>
+                        </div>
+                        
+                        <!-- Description -->
+                        <p style="color: var(--orange-gray); margin: 1rem 0; font-size: 0.95rem;">
+                            The visionary behind Stick Run Classic. Manuel leads the project with passion and dedication, ensuring the game stays true to its roots while innovating for the future.
+                        </p>
+                        
+                        <!-- Social Links -->
+                        <div class="team-social-links">
+                            <a href="https://www.facebook.com/Mwni1337" 
+                               class="team-social-link"
+                               title="Facebook" target="_blank">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://discord.gg/b2RBuXVWjH" 
+                               class="team-social-link"
+                               title="Discord" target="_blank">
+                                <i class="bi bi-discord"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Developer - Macmac Cosme -->
+                <div class="team-member-card" data-role="developer">
+                    <!-- Background Image -->
+                    <div class="team-member-bg"
+                         style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');">
+                    </div>
+                    
+                    <!-- Avatar Section -->
+                    <div class="team-avatar-section">
+                        <div class="team-avatar-container">
+                            <div class="team-avatar-rings">
+                                <div class="team-avatar-ring"></div>
+                                <div class="team-avatar-ring"></div>
+                                <div class="team-avatar-ring"></div>
+                            </div>
+                            
+                            <!-- Developer Avatar - Updated with Macmac.jpg -->
+                            <img src="/images/Macmac.jpg" 
+                                 alt="Macmac Cosme" 
+                                 class="team-member-avatar">
+                        </div>
+                    </div>
+                    
+                    <!-- Member Info -->
+                    <div class="team-member-info">
+                        <h3 class="team-member-name">
+                            Macmac Cosme
+                        </h3>
+                        
+                        <div class="team-member-discord">
+                            <i class="bi bi-discord"></i>
+                            <span>Macmac Cosme</span>
+                            
+                        </div>
+                        
+                        <!-- Role Badges -->
+                        <div class="team-role-badges">
+                            <span class="team-role-badge developer">
+                                <i class="bi bi-code-slash"></i>
+                                Lead Developer
+                            </span>
+                        </div>
+                        
+                        <!-- Description -->
+                        <p style="color: var(--orange-gray); margin: 1rem 0; font-size: 0.95rem;">
+                            The technical mastermind. Macmac brings Stick Run Classic to life with expert coding skills and a deep understanding of game mechanics. Also an active top player in the community.
+                        </p>
+                        
+                        <!-- Social Links -->
+                        <div class="team-social-links">
+                            <a href="https://www.facebook.com/trustmac.sec" 
+                               class="team-social-link"
+                               title="Facebook" target="_blank">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://discord.gg/b2RBuXVWjH" 
+                               class="team-social-link"
+                               title="Discord" target="_blank">
+                                <i class="bi bi-discord"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Downloads -->
+    <section id="download" class="section-classic">
+        <div class="container">
+            <h2 class="section-title">DOWNLOAD NOW</h2>
+            
+            <div class="row">
+                <!-- Windows Download -->
+                <div class="col-md-4 mb-4">
+                    <div class="card-classic h-100 text-center">
+                        <i class="fab fa-windows fs-1 text-blue mb-3"></i>
+                        <h4>Windows PC</h4>
+                        <p class="text-muted mb-3">Version v1.6.2 • RAR Archive</p>
+                        <a href="https://macmaccosme.itch.io/stick-run-classic" 
+                           target="_blank"
+                           class="btn btn-classic btn-classic-primary w-100">
+                            <i class="bi bi-download me-2"></i>Download on itch.io
+                        </a>
+                        <div class="mt-3">
+                            <small class="text-muted">Direct download from itch.io</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Android Download -->
+                <div class="col-md-4 mb-4">
+                    <div class="card-classic h-100 text-center">
+                        <i class="fab fa-android fs-1 text-green mb-3"></i>
+                        <h4>Android Mobile</h4>
+                        <p class="text-muted mb-3">Choose your device architecture</p>
+                        <button type="button" 
+                                class="btn btn-classic btn-classic-primary w-100"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#mobileSelectionModal">
+                            <i class="bi bi-download me-2"></i>Choose Version
+                        </button>
+                        <div class="mt-3">
+                            <small class="text-muted">32-bit or 64-bit available</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- iOS Download -->
+                <div class="col-md-4 mb-4">
+                    <div class="card-classic h-100 text-center">
+                        <i class="fab fa-apple fs-1 text-gray mb-3"></i>
+                        <h4>iOS</h4>
+                        <p class="text-muted mb-3">Version 1.2.0 • Coming Soon</p>
+                        <a href="https://macmaccosme.itch.io/stick-run-classic" 
+                           target="_blank"
+                           class="btn btn-classic btn-classic-secondary w-100">
+                            <i class="bi bi-globe me-2"></i>Visit itch.io Page
+                        </a>
+                        <div class="mt-3">
+                            <small class="text-muted">Check for iOS updates</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Installation Instructions -->
+            <div class="card-classic mt-4">
+                <h5 class="text-center mb-3">📦 Installation Instructions</h5>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="text-center mb-3">
+                            <i class="bi bi-windows fs-2 text-blue mb-2"></i>
+                            <h6>Windows</h6>
+                            <ol class="text-muted text-start" style="font-size: 0.9rem;">
+                                <li>Visit itch.io page from Windows button</li>
+                                <li>Download the RAR file</li>
+                                <li>Extract using WinRAR/7-Zip</li>
+                                <li>Run Stickrun PC.app and enjoy!</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center mb-3">
+                            <i class="fab fa-android fs-2 text-green mb-2"></i>
+                            <h6>Android</h6>
+                            <ol class="text-muted text-start" style="font-size: 0.9rem;">
+                                <li>Choose correct version (32-bit or 64-bit)</li>
+                                <li>Allow installation from unknown sources</li>
+                                <li>Install APK file from itch.io</li>
+                                <li>Launch and play!</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center mb-3">
+                            <i class="fab fa-apple fs-2 text-gray mb-2"></i>
+                            <h6>iOS (Coming Soon)</h6>
+                            <ol class="text-muted text-start" style="font-size: 0.9rem;">
+                                <li>Will be on App Store</li>
+                                <li>Search "Stick Run Classic"</li>
+                                <li>Download from App Store</li>
+                                <li>Install and enjoy!</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Itch.io Info -->
+            <div class="card-classic mt-4">
+                <div class="row align-items-center">
+                    <div class="col-md-3 text-center">
+                        <i class="bi bi-box-arrow-up-right fs-1 text-orange mb-3"></i>
+                        <h5>itch.io</h5>
+                    </div>
+                    <div class="col-md-9">
+                        <h5>Download from itch.io</h5>
+                        <p class="text-muted mb-3">
+                            All versions of Stick Run Classic are available on our itch.io page. Click any download button above to be redirected to the itch.io page where you can choose your preferred platform.
+                        </p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="text-muted">
+                                    <li>Windows PC version (RAR)</li>
+                                    <li>Android APK versions</li>
+                                    <li>Latest updates</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="text-muted">
+                                    <li>Safe and verified downloads</li>
+                                    <li>Version history</li>
+                                    <li>Community support</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <a href="https://macmaccosme.itch.io/stick-run-classic" 
+                           target="_blank"
+                           class="btn btn-classic btn-classic-primary mt-2">
+                            <i class="bi bi-box-arrow-up-right me-2"></i>Open itch.io Page
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile Selection Modal -->
+    <div class="modal fade mobile-selection-modal" id="mobileSelectionModal" tabindex="-1" aria-labelledby="mobileSelectionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mobileSelectionModalLabel">
+                        <i class="fab fa-android me-2 text-green"></i>Select Android Version
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted text-center mb-4">Choose the version that matches your device's architecture for optimal performance</p>
+                    
+                    <div class="row g-3">
+                        <!-- 64-bit Option -->
+                        <div class="col-md-6">
+                            <div class="mobile-option-card" onclick="selectAndroidVersion('64-bit')">
+                                <i class="fas fa-microchip"></i>
+                                <h5>64-bit Version</h5>
+                                <span class="badge rounded-pill mb-2">Recommended</span>
+                                <p>For modern devices (2015+) with 64-bit processors</p>
+                                <div class="mt-3">
+                                    <small class="text-muted">Better performance on newer devices</small>
+                                    <br>
+                                    <small class="text-warning">Click to go to itch.io</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 32-bit Option -->
+                        <div class="col-md-6">
+                            <div class="mobile-option-card" onclick="selectAndroidVersion('32-bit')">
+                                <i class="fas fa-microchip"></i>
+                                <h5>32-bit Version</h5>
+                                <span class="badge rounded-pill mb-2">Legacy</span>
+                                <p>For older devices with 32-bit processors</p>
+                                <div class="mt-3">
+                                    <small class="text-muted">Compatible with older Android versions</small>
+                                    <br>
+                                    <small class="text-warning">Click to go to itch.io</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- How to Check Your Device -->
+                    <div class="mt-4">
+                        <div class="accordion" id="deviceCheckAccordion">
+                            <div class="accordion-item" style="background: rgba(44, 24, 16, 0.5); border: 1px solid rgba(255, 107, 0, 0.3);">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#deviceCheckCollapse" style="background: rgba(44, 24, 16, 0.8); color: var(--orange-light);">
+                                        <i class="fas fa-info-circle me-2 text-cyan"></i>How to check your device architecture?
+                                    </button>
+                                </h2>
+                                <div id="deviceCheckCollapse" class="accordion-collapse collapse" data-bs-parent="#deviceCheckAccordion">
+                                    <div class="accordion-body text-muted" style="font-size: 0.9rem;">
+                                        <strong>Most modern devices (2015+) use 64-bit:</strong>
+                                        <ul class="mb-2">
+                                            <li>Samsung Galaxy S6 and newer</li>
+                                            <li>Google Pixel series</li>
+                                            <li>Most phones from 2015 onward</li>
+                                        </ul>
+                                        <strong>If unsure:</strong>
+                                        <ul>
+                                            <li>Try 64-bit first (recommended)</li>
+                                            <li>If app doesn't work, try 32-bit</li>
+                                            <li>Check device specifications online</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-classic btn-classic-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <small class="text-muted mx-3">Choose an option to go to itch.io</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-classic">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Stick Run Classic</h5>
+                    <p class="text-muted">
+                        The classic stick figure multiplayer game that started it all. Run, trade, and have fun!
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="https://discord.gg/b2RBuXVWjH" target="_blank" class="text-decoration-none">
+                            <i class="fab fa-discord fs-5 text-purple"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none" style="display: none;">
+                            <i class="fab fa-twitter fs-5 text-cyan"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none" style="display: none;">
+                            <i class="fab fa-youtube fs-5" style="color: #ff3d00;"></i>
+                        </a>
+                        <a href="https://www.facebook.com/trustmac.sec" target="_blank" class="text-decoration-none">
+                            <i class="fab fa-facebook-f fs-5 text-blue"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="#">Home</a>
+                        <a href="#items">Items</a>
+                        <a href="#rankings">Rankings</a>
+                        <a href="#team">Team</a>
+                        <a href="#download">Download</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Support</h5>
+                    <div class="footer-links">
+                        <a href="#">Help Center</a>
+                        <a href="#">FAQ</a>
+                        <a href="#">Contact Us</a>
+                        <a href="#">Report Bug</a>
+                        <a href="#">Suggest Feature</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Legal</h5>
+                    <div class="footer-links">
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Cookie Policy</a>
+                        <a href="#">Community Guidelines</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center pt-4 border-top border-purple">
+                <p class="text-muted mb-0">
+                    &copy; 2026 Stick Run Classic. All rights reserved. | Made with by Stick Run Classic Team
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Downloads Script -->
+    <script>
+        // itch.io URL
+       const ITCH_IO_URL = 'https://macmaccosme.itch.io/stick-run-classic';
+
+        function selectAndroidVersion(version) {
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('mobileSelectionModal'));
+            if (modal) modal.hide();
+            
+            // Show loading
+            showDownloadProgress();
+            
+            // Redirect to itch.io
+            setTimeout(() => {
+                window.open(ITCH_IO_URL, '_blank');
+                
+                // Hide progress after a delay
+                setTimeout(() => {
+                    hideDownloadProgress();
+                }, 2000);
+            }, 500);
+        }
+
+         function showDownloadProgress() {
+            const progressBar = document.getElementById('downloadProgress');
+            const progressBarInner = document.getElementById('downloadProgressBar');
+            
+            progressBar.style.display = 'block';
+            progressBarInner.style.width = '30%';
+            
+            // Simulate progress
+            setTimeout(() => {
+                progressBarInner.style.width = '70%';
+            }, 500);
+            
+            setTimeout(() => {
+                progressBarInner.style.width = '90%';
+            }, 1000);
+        }
+
+      function hideDownloadProgress() {
+            const progressBar = document.getElementById('downloadProgress');
+            const progressBarInner = document.getElementById('downloadProgressBar');
+            
+            progressBarInner.style.width = '100%';
+            
+            setTimeout(() => {
+                progressBar.style.display = 'none';
+                progressBarInner.style.width = '0%';
+            }, 500);
+        }
+
+        function showDownloadMessage(version) {
+            // No alert at all
+        }
+
+        function showDownloadComplete(version) {
+            // No alert at all
+        }
+
+       // Simple security protection
+        document.addEventListener('DOMContentLoaded', function() {
+            // Disable right-click
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // Disable keyboard shortcuts for dev tools
+            document.addEventListener('keydown', function(e) {
+                // Disable F12
+                if (e.key === 'F12' || e.keyCode === 123) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Disable Ctrl+Shift+I
+                if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Disable Ctrl+Shift+J
+                if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Disable Ctrl+U (view source)
+                if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+    
+    <!-- ========== COMBINED RANKINGS SCRIPT ========== -->
+    <script>
+        // ========== SINGLE RANKINGS SYSTEM ==========
+        let currentRankingType = 'active';
+
+        // Main function to load rankings (tries JSON first, then falls back to mock data)
+        async function loadRankings(type) {
+            const container = document.getElementById('rankings-container');
+            
+            // Show loading state
+            container.innerHTML = `
+                <div class="ranking-loading">
+                    <i class="bi bi-hourglass-split"></i>
+                    <p class="ranking-loading-text">Loading ${type} rankings...</p>
+                </div>
+            `;
+
+            // Try to load from JSON file first
+            try {
+                const response = await fetch('rankings_data.json?_=' + Date.now()); // Add timestamp to prevent caching
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('✅ Data loaded from Subsystem A:', data);
+                    
+                    // Extract the correct category
+                    let rankings = [];
+                    if (type === 'active' && data.categories && data.categories.active) {
+                        rankings = data.categories.active.map(item => ({
+                            position: item.rank,
+                            name: item.name,
+                            score: item.score,
+                            badge: item.badge
+                        }));
+                    } else if (type === 'highscore' && data.categories && data.categories.highscore) {
+                        rankings = data.categories.highscore.map(item => ({
+                            position: item.rank,
+                            name: item.name,
+                            score: item.score,
+                            badge: item.badge
+                        }));
+                    } else if (type === 'boxjumps' && data.categories && data.categories.boxjumps) {
+                        rankings = data.categories.boxjumps.map(item => ({
+                            position: item.rank,
+                            name: item.name,
+                            score: item.score,
+                            badge: item.badge
+                        }));
+                    }
+                    
+                    if (rankings.length > 0) {
+                        displayRankings(rankings, type);
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.log('Could not load from JSON, using fallback data');
+            }
+            
+            // If JSON fails, use mock data
+            const rankings = getMockRankings(type);
+            displayRankings(rankings, type);
+        }
+
+        // Mock data function (fallback)
+        function getMockRankings(type) {
+            let rankings = [];
+            
+            switch(type) {
+                case 'active':
+                    rankings = [
+                        { position: 1, name: "nibbler", score: "553 min", badge: "Ultra Active" },
+                        { position: 2, name: "Killerwbøss", score: "277 min", badge: "Very Active" },
+                        { position: 3, name: "blzmes", score: "259 min", badge: "Very Active" },
+                        { position: 4, name: "Macmac Cosme", score: "230 min", badge: "Active" },
+                        { position: 5, name: "Hibandicam", score: "208 min", badge: "Active" },
+                        { position: 6, name: "Jandy", score: "194 min", badge: "Active" },
+                        { position: 7, name: "sobidhi", score: "185 min", badge: "Active" },
+                        { position: 8, name: "devilmaycry", score: "125 min", badge: "Active" },
+                        { position: 9, name: "Macmac Cosme", score: "102 min", badge: "Active" },
+                        { position: 10, name: "eprowy", score: "99 min", badge: "Active" }
+                    ];
+                    break;
+                    
+                case 'highscore':
+                    rankings = [
+                        { position: 1, name: "cpmpastrana", score: "24,271", badge: "Legend" },
+                        { position: 2, name: "Lancho", score: "24,121", badge: "Legend" },
+                        { position: 3, name: "Palfittzk", score: "22,074", badge: "Pro" },
+                        { position: 4, name: "dehislime", score: "18,908", badge: "Pro" },
+                        { position: 5, name: "Coneno", score: "17,068", badge: "Pro" },
+                        { position: 6, name: "sarboss", score: "16,246", badge: "Expert" },
+                        { position: 7, name: "stickrunner", score: "13,681", badge: "Expert" },
+                        { position: 8, name: "kitten", score: "12,478", badge: "Expert" },
+                        { position: 9, name: "eprowy", score: "12,273", badge: "Advanced" },
+                        { position: 10, name: "zelrlc", score: "12,087", badge: "Advanced" }
+                    ];
+                    break;
+                    
+                case 'boxjumps':
+                    rankings = [
+                        { position: 1, name: "Coneno", score: "1st Place", badge: "Jump God" },
+                        { position: 2, name: "Palfitt2k", score: "2nd Place", badge: "Jump Pro" },
+                        { position: 3, name: "Damman1234", score: "3rd Place", badge: "Jump Pro" },
+                        { position: 4, name: "eprowy", score: "4th Place", badge: "Jump Expert" },
+                        { position: 5, name: "stickrunner", score: "5th Place", badge: "Jump Expert" },
+                        { position: 6, name: "panene2", score: "6th Place", badge: "Jump Expert" },
+                        { position: 7, name: "Reoruse", score: "7th Place", badge: "Advanced" },
+                        { position: 8, name: "Soda81", score: "8th Place", badge: "Advanced" },
+                        { position: 9, name: "sarhoss", score: "9th Place", badge: "Advanced" },
+                        { position: 10, name: "Lancho", score: "10th Place", badge: "Advanced" }
+                    ];
+                    break;
+            }
+            
+            return rankings;
+        }
+
+        // Display function (SINGLE VERSION)
+        function displayRankings(rankings, type) {
+            const container = document.getElementById('rankings-container');
+            if (!container) return;
+            
+            let html = '';
+            
+            rankings.forEach((player, index) => {
+                let cardClass = 'ranking-card';
+                if (index === 0) cardClass += ' gold';
+                else if (index === 1) cardClass += ' silver';
+                else if (index === 2) cardClass += ' bronze';
+                
+                let scoreLabel = '';
+                switch(type) {
+                    case 'active': scoreLabel = 'Active Time'; break;
+                    case 'highscore': scoreLabel = 'High Score'; break;
+                    case 'boxjumps': scoreLabel = 'Box Jumps'; break;
+                }
+                
+                html += `
+                    <div class="${cardClass} d-flex align-items-center">
+                        <div class="ranking-position">${player.position}</div>
+                        <div class="ranking-avatar">
+                            <img src="/images/src1.png" alt="${player.name}" title="${player.name}">
+                        </div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">${player.name}</div>
+                            <div class="ranking-score">${scoreLabel}: ${player.score}</div>
+                        </div>
+                        <div class="ranking-badge">${player.badge}</div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup tab switching
+            document.querySelectorAll('.ranking-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.ranking-tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Load rankings for this tab
+                    const type = this.getAttribute('data-type');
+                    currentRankingType = type;
+                    loadRankings(type);
+                });
+            });
+            
+            // Load initial rankings
+            loadRankings('active');
+        });
+    </script>
+    
+    <script>
+    // Image Slider Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const images = document.querySelectorAll('.slider-image');
+        const dots = document.querySelectorAll('.slider-dot');
+        let currentIndex = 0;
+        const intervalTime = 3000; // 3 seconds
+        
+        function showImage(index) {
+            images.forEach(img => img.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            images[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentIndex = index;
+        }
+        
+        // Auto-rotate character images
+        let sliderInterval = setInterval(() => {
+            let nextIndex = (currentIndex + 1) % images.length;
+            showImage(nextIndex);
+        }, intervalTime);
+        
+        // Dot click functionality for character images
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                clearInterval(sliderInterval);
+                showImage(index);
+                
+                sliderInterval = setInterval(() => {
+                    let nextIndex = (currentIndex + 1) % images.length;
+                    showImage(nextIndex);
+                }, intervalTime);
+            });
+        });
+        
+        // Pause auto-rotation on hover for character slider
+        const sliderContainer = document.querySelector('.image-slider-container');
+        sliderContainer.addEventListener('mouseenter', () => {
+            clearInterval(sliderInterval);
+        });
+        
+        sliderContainer.addEventListener('mouseleave', () => {
+            clearInterval(sliderInterval);
+            sliderInterval = setInterval(() => {
+                let nextIndex = (currentIndex + 1) % images.length;
+                showImage(nextIndex);
+            }, intervalTime);
+        });
+        
+        // Background Slider Functionality
+        const backgroundImages = document.querySelectorAll('.background-image');
+        const backgroundDots = document.querySelectorAll('.background-dot');
+        let currentBackgroundIndex = 0;
+        const backgroundIntervalTime = 4000; // 4 seconds
+        
+        function showBackground(index) {
+            backgroundImages.forEach(img => img.classList.remove('active'));
+            backgroundDots.forEach(dot => dot.classList.remove('active'));
+            
+            backgroundImages[index].classList.add('active');
+            backgroundDots[index].classList.add('active');
+            currentBackgroundIndex = index;
+        }
+        
+        // Auto-rotate background images
+        let backgroundInterval = setInterval(() => {
+            let nextIndex = (currentBackgroundIndex + 1) % backgroundImages.length;
+            showBackground(nextIndex);
+        }, backgroundIntervalTime);
+        
+        // Dot click functionality for background images
+        backgroundDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                clearInterval(backgroundInterval);
+                showBackground(index);
+                
+                backgroundInterval = setInterval(() => {
+                    let nextIndex = (currentBackgroundIndex + 1) % backgroundImages.length;
+                    showBackground(nextIndex);
+                }, backgroundIntervalTime);
+            });
+        });
+        
+        // Pause background auto-rotation on hover
+        const heroSection = document.querySelector('.hero-classic');
+        heroSection.addEventListener('mouseenter', () => {
+            clearInterval(backgroundInterval);
+        });
+        
+        heroSection.addEventListener('mouseleave', () => {
+            clearInterval(backgroundInterval);
+            backgroundInterval = setInterval(() => {
+                let nextIndex = (currentBackgroundIndex + 1) % backgroundImages.length;
+                showBackground(nextIndex);
+            }, backgroundIntervalTime);
+        });
+        
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar-classic');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(44, 24, 16, 0.98)';
+                navbar.style.boxShadow = '0 4px 30px rgba(255, 107, 0, 0.4)';
+            } else {
+                navbar.style.background = 'rgba(44, 24, 16, 0.95)';
+                navbar.style.boxShadow = '0 4px 20px rgba(255, 107, 0, 0.3)';
+            }
+        });
+    });
+</script>
+</body>
+</html>
