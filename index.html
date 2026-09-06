@@ -23,12 +23,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- PlayerIO SDK -->
-    <script src="https://playerio-public.s3.amazonaws.com/html/js/playerio.js"></script>
+    <!-- PlayerIO SDK - LOCAL VERSION (FIXED) -->
+    <script src="/js/playerio.js"></script>
     
-    <!-- PlayerIO Fallback -->
+    <!-- PlayerIO Fallback - in case local file fails to load -->
     <script>
-        // Fallback if PlayerIO fails to load
         (function() {
             // Check if PlayerIO loaded after a short delay
             setTimeout(function() {
@@ -46,18 +45,32 @@
                                             loadRange: function(table, index, from, to, order, limit, success, error) {
                                                 console.warn('Fallback: loadRange called for table:', table);
                                                 if (success) {
-                                                    // Return empty array with some mock data for demo
+                                                    // Return mock data for each table
                                                     var mockData = [];
                                                     if (table === 'Active') {
                                                         mockData = [
-                                                            { key: 'simplePlayer1', name: 'Demo Player 1', time: 3600 },
-                                                            { key: 'simplePlayer2', name: 'Demo Player 2', time: 2800 },
-                                                            { key: 'simplePlayer3', name: 'Demo Player 3', time: 2100 }
+                                                            { key: 'simplePlayer1', name: 'SpeedRunner', time: 4500 },
+                                                            { key: 'simplePlayer2', name: 'JumpMaster', time: 3800 },
+                                                            { key: 'simplePlayer3', name: 'StickLegend', time: 3200 },
+                                                            { key: 'simplePlayer4', name: 'RunNinja', time: 2800 },
+                                                            { key: 'simplePlayer5', name: 'ParkourPro', time: 2500 }
                                                         ];
                                                     } else if (table === 'PlayerObjects') {
                                                         mockData = [
-                                                            { key: 'simplePlayer1', name: 'Demo Player 1', highscore: 15000, combo_highscore: 250 },
-                                                            { key: 'simplePlayer2', name: 'Demo Player 2', highscore: 12000, combo_highscore: 180 }
+                                                            { key: 'simplePlayer1', name: 'SpeedRunner', highscore: 25000, combo_highscore: 500 },
+                                                            { key: 'simplePlayer2', name: 'JumpMaster', highscore: 18000, combo_highscore: 350 },
+                                                            { key: 'simplePlayer3', name: 'StickLegend', highscore: 15000, combo_highscore: 300 }
+                                                        ];
+                                                    } else if (table === 'Bank') {
+                                                        mockData = [
+                                                            { key: 'simplePlayer1', name: 'SpeedRunner', balance: 1000000 },
+                                                            { key: 'simplePlayer2', name: 'JumpMaster', balance: 500000 },
+                                                            { key: 'simplePlayer3', name: 'StickLegend', balance: 250000 }
+                                                        ];
+                                                    } else if (table === 'Main') {
+                                                        mockData = [
+                                                            { key: 'simplePlayer1', name: 'SpeedRunner', bids: 15000 },
+                                                            { key: 'simplePlayer2', name: 'JumpMaster', bids: 12000 }
                                                         ];
                                                     }
                                                     success(mockData);
