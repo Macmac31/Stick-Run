@@ -2,7 +2,7 @@ var id = null;
 
 function loadCaptcha() {
     PlayerIO.quickConnect.simpleGetCaptcha(
-        "trade-run-tmtxvmpwouefjfnsaho48a",
+        "stick-run-classic-v1-1j34zpgpjkd7yo3yrta8w",
         300,
         50,
         function (captcha) {
@@ -42,7 +42,7 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
     }
 
     PlayerIO.authenticate(
-        "ant-n-run-oqhuuptyugjyxyfjuzv1w",
+        "stick-run-classic-v1-1j34zpgpjkd7yo3yrta8w",
         "public",                                   //A connection with the authentication type SimpleUsers
         {
             register: "true",

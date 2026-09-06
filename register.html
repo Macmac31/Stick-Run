@@ -655,7 +655,7 @@
 
         function loadCaptcha() {
             PlayerIO.quickConnect.simpleGetCaptcha(
-                "trade-run-tmtxvmpwouefjfnsaho48a", 300, 50,
+                "stick-run-classic-v1-1j34zpgpjkd7yo3yrta8w", 300, 50,
                 function(captcha) {
                     document.getElementById('captchaImage').src = captcha.captchaImageUrl;
                     captchaKey = captcha.captchaKey;
@@ -777,7 +777,7 @@
                 return;
             }
             PlayerIO.authenticate(
-                "trade-run-tmtxvmpwouefjfnsaho48a",
+                "stick-run-classic-v1-1j34zpgpjkd7yo3yrta8w",
                 "public",
                 { register: "true", username, password, email, captchaKey, captchaValue },
                 {},
