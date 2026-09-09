@@ -125,6 +125,139 @@
             overflow-x: hidden;
         }
 
+        /* ========== LOADING SCREEN STYLES ========== */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 99999;
+            background: radial-gradient(circle at 50% 40%, #2c1207 0%, #1a0b0e 55%, #0f0507 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: opacity 0.8s ease;
+        }
+
+        #loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #loading-screen::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255, 107, 0, 0.18), transparent 45%),
+                radial-gradient(circle at 80% 75%, rgba(255, 179, 0, 0.15), transparent 45%);
+            pointer-events: none;
+        }
+
+        /* Stick Run Logo */
+        .stick-run-logo {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 3rem;
+        }
+
+        .stick-run-logo h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 6.5rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            line-height: 1;
+            position: relative;
+            display: inline-block;
+        }
+
+        .stick-run-logo h1 span {
+            position: relative;
+            display: inline-block;
+            -webkit-text-stroke: 2px #000;
+            text-shadow:
+                0 3px 0 #000,
+                0 6px 0 rgba(0, 0, 0, 0.6),
+                0 10px 25px rgba(255, 107, 0, 0.55);
+            animation: logo-pulse 2.2s ease-in-out infinite;
+        }
+
+        .stick-run-logo h1 span.blue {
+            background: linear-gradient(180deg, #ffffff 0%, #ffcc80 60%, #ff9500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stick-run-logo h1 span.red {
+            background: linear-gradient(180deg, #ff9a3d 0%, #ff3d00 55%, #b31700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation-delay: 0.15s;
+        }
+
+        @keyframes logo-pulse {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 12px rgba(255, 107, 0, 0.5));
+            }
+            50% {
+                transform: scale(1.035);
+                filter: drop-shadow(0 0 26px rgba(255, 149, 0, 0.85));
+            }
+        }
+
+        /* Loading Content */
+        .loading-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            width: 100%;
+            max-width: 600px;
+            padding: 0 20px;
+        }
+
+        .loading-bar-container {
+            width: 100%;
+            max-width: 420px;
+            height: 18px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 107, 0, 0.4);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 107, 0, 0.25);
+        }
+
+        .loading-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--orange-accent), var(--orange-primary), var(--orange-yellow));
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 20px;
+            box-shadow: 0 0 15px rgba(255, 149, 0, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .stick-run-logo h1 {
+                font-size: 4.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stick-run-logo h1 {
+                font-size: 3.2rem;
+            }
+        }
+
         /* ========== MUSIC PLAYER - STICK RUN CLASSIC STYLE ========== */
         #music-player {
             position: fixed;
@@ -2103,9 +2236,25 @@
         <div class="download-progress-bar" id="downloadProgressBar"></div>
     </div>
 
+    <!-- ========== LOADING SCREEN ========== -->
+    <div id="loading-screen">
+        <!-- Stick Run Logo -->
+        <div class="stick-run-logo">
+            <h1><span class="blue">STICK</span> <span class="red">RUN</span></h1>
+        </div>
+
+        <!-- Loading Content -->
+        <div class="loading-content">
+            <div class="loading-bar-container">
+                <div class="loading-bar" id="loading-bar"></div>
+            </div>
+        </div>
+    </div>
+    <!-- ========== END LOADING SCREEN ========== -->
+
     <!-- Background Music - Auto Play -->
     <audio id="bgMusic" loop preload="auto">
-        <source src="srbgm.mp3" type="audio/mpeg">
+        <source src="/music/srbgm.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
@@ -2164,7 +2313,7 @@
                     </li>
                 </ul>
                 <!-- PLAY NOW BUTTON - Smaller version -->
-                <a href="https://stickrunclassic-singleplayer.netlify.app" target="_blank" class="btn-playnow ms-3" id="playNowBtn">
+                <a href="https://stick-run-classic.vercel.app/" target="_blank" class="btn-playnow ms-3" id="playNowBtn">
                     <i class="bi bi-controller me-1"></i>Play
                 </a>
             </div>
@@ -3385,6 +3534,33 @@
             }
         });
     });
+    </script>
+
+    <!-- ========== LOADING SCREEN SCRIPT ========== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingScreen = document.getElementById('loading-screen');
+            const loadingBar = document.getElementById('loading-bar');
+            
+            let progress = 0;
+            const loadingInterval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(loadingInterval);
+                    
+                    // Show main content and hide loading screen
+                    setTimeout(() => {
+                        loadingScreen.classList.add('hidden');
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                        }, 1000);
+                    }, 500);
+                }
+                
+                loadingBar.style.width = progress + '%';
+            }, 150);
+        });
     </script>
 </body>
 </html>
