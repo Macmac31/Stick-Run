@@ -125,6 +125,204 @@
             overflow-x: hidden;
         }
 
+        /* ========== MUSIC PLAYER - STICK RUN CLASSIC STYLE ========== */
+        #music-player {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(44, 24, 16, 0.85);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 107, 0, 0.4);
+            border-radius: 50px;
+            padding: 8px 18px 8px 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 107, 0, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-width: 140px;
+        }
+
+        #music-player:hover {
+            border-color: var(--orange-primary);
+            box-shadow: 0 8px 40px rgba(255, 107, 0, 0.3), 0 0 60px rgba(255, 107, 0, 0.1);
+            transform: scale(1.02);
+        }
+
+        #music-player .music-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            animation: music-icon-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes music-icon-pulse {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(255, 107, 0, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(255, 107, 0, 0.6);
+            }
+        }
+
+        #music-player .music-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+            min-width: 0;
+        }
+
+        #music-player .music-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--orange-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        #music-player .music-artist {
+            font-size: 0.6rem;
+            color: var(--orange-gray);
+            opacity: 0.7;
+            white-space: nowrap;
+        }
+
+        #music-player .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 4px;
+        }
+
+        #music-player .music-btn {
+            background: none;
+            border: none;
+            color: var(--orange-gray);
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #music-player .music-btn:hover {
+            color: var(--orange-primary);
+            background: rgba(255, 107, 0, 0.15);
+            transform: scale(1.1);
+        }
+
+        #music-player .music-btn.playing {
+            color: var(--orange-primary);
+            animation: music-btn-glow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes music-btn-glow {
+            0%, 100% {
+                text-shadow: 0 0 10px rgba(255, 107, 0, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 25px rgba(255, 107, 0, 0.7);
+            }
+        }
+
+        #music-player .music-volume {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        #music-player .music-volume input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 50px;
+            height: 3px;
+            background: rgba(255, 107, 0, 0.3);
+            border-radius: 2px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        #music-player .music-volume input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--orange-primary);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 107, 0, 0.4);
+        }
+
+        #music-player .music-volume input[type="range"]::-moz-range-thumb {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--orange-primary);
+            cursor: pointer;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            #music-player {
+                bottom: 16px;
+                right: 16px;
+                padding: 6px 14px 6px 10px;
+                min-width: auto;
+                border-radius: 40px;
+            }
+
+            #music-player .music-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+
+            #music-player .music-title {
+                font-size: 0.5rem;
+            }
+
+            #music-player .music-artist {
+                font-size: 0.5rem;
+            }
+
+            #music-player .music-btn {
+                width: 24px;
+                height: 24px;
+                font-size: 0.8rem;
+            }
+
+            #music-player .music-volume input[type="range"] {
+                width: 35px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #music-player .music-volume input[type="range"] {
+                width: 25px;
+            }
+            
+            #music-player .music-info {
+                max-width: 80px;
+            }
+        }
+
         /* Game Features Section Styling */
         #features {
             position: relative;
@@ -1905,46 +2103,71 @@
         <div class="download-progress-bar" id="downloadProgressBar"></div>
     </div>
 
+    <!-- Background Music - Auto Play -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="srbgm.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Music Player - Stick Run Classic Style -->
+    <div id="music-player">
+        <div class="music-icon">
+            <i class="bi bi-music-note-beamed"></i>
+        </div>
+        <div class="music-info">
+            <span class="music-title">Stick Run Classic</span>
+            <span class="music-artist">Background Music</span>
+        </div>
+        <div class="music-controls">
+            <button class="music-btn playing" id="musicToggle" title="Toggle Music">
+                <i class="bi bi-pause-fill" id="musicIcon"></i>
+            </button>
+            <div class="music-volume">
+                <input type="range" id="volumeSlider" min="0" max="100" value="30">
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-classic">
         <div class="container">
             <a class="navbar-brand navbar-brand-classic" href="#">
-    <div class="logo-horizontal">
-        <img src="/images/src.png" alt="Stick Run Classic" class="logo-img">
-        <span class="logo-full-text">STICK RUN CLASSIC</span>
-    </div>
-</a>
+                <div class="logo-horizontal">
+                    <img src="/images/src.png" alt="Stick Run Classic" class="logo-img">
+                    <span class="logo-full-text">STICK RUN CLASSIC</span>
+                </div>
+            </a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             
             <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-            <a class="nav-link nav-link-classic active" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link nav-link-classic" href="#items">Items</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link nav-link-classic" href="#rankings">Rankings</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link nav-link-classic" href="#team">Team</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link nav-link-classic" href="#download">Download</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link nav-link-classic" href="register.html">Register</a>
-        </li>
-    </ul>
-   <!-- PLAY NOW BUTTON - Smaller version -->
-<a href="https://stickrunclassic-singleplayer.netlify.app" target="_blank" class="btn-playnow ms-3" id="playNowBtn">
-    <i class="bi bi-controller me-1"></i>Play
-</a>
-</div>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-classic active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-classic" href="#items">Items</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-classic" href="#rankings">Rankings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-classic" href="#team">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-classic" href="#download">Download</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-classic" href="register.html">Register</a>
+                    </li>
+                </ul>
+                <!-- PLAY NOW BUTTON - Smaller version -->
+                <a href="https://stickrunclassic-singleplayer.netlify.app" target="_blank" class="btn-playnow ms-3" id="playNowBtn">
+                    <i class="bi bi-controller me-1"></i>Play
+                </a>
+            </div>
         </div>
     </nav>
 
@@ -1980,9 +2203,9 @@
                         Experience the classic stick figure multiplayer game! Run, jump, trade, and customize your character in this addictive gaming adventure.
                     </p>
                     <div class="d-flex gap-3">
-                      <a href="https://discord.gg/F7t9cf4gUm" class="btn btn-classic btn-classic-primary">
-    <i class="bi bi-controller me-2"></i>Join Discord Now!
-</a>
+                        <a href="https://discord.gg/F7t9cf4gUm" class="btn btn-classic btn-classic-primary">
+                            <i class="bi bi-controller me-2"></i>Join Discord Now!
+                        </a>
                         <a href="#download" class="btn btn-classic btn-classic-secondary">
                             <i class="bi bi-download me-2"></i>Download
                         </a>
@@ -2051,96 +2274,90 @@
         </div>
     </section>
 
-   <!-- Top Items -->
-<section id="items" class="section-classic">
-    <div class="container">
-        <h2 class="section-title">MOST VALUABLE ITEMS</h2>
-        
-        <div class="grid-container grid-5">
-            <!-- Item 1 -->
-            <div class="item-card">
-                <span class="rarity-badge rarity-unique mb-2">#1</span>
-                <img src="/images/tits.png" 
-                     alt="Titties" 
-                     class="item-image">
-                <h5 class="item-name">Titties</h5>
-                <div class="item-price">
-                    <i class="bi bi-coin me-1"></i>Not Available
+    <!-- Top Items -->
+    <section id="items" class="section-classic">
+        <div class="container">
+            <h2 class="section-title">MOST VALUABLE ITEMS</h2>
+            
+            <div class="grid-container grid-5">
+                <!-- Item 1 -->
+                <div class="item-card">
+                    <span class="rarity-badge rarity-unique mb-2">#1</span>
+                    <img src="/images/tits.png" 
+                         alt="Titties" 
+                         class="item-image">
+                    <h5 class="item-name">Titties</h5>
+                    <div class="item-price">
+                        <i class="bi bi-coin me-1"></i>Not Available
+                    </div>
+                </div>
+                
+                <!-- Item 2 -->
+                <div class="item-card">
+                    <span class="rarity-badge rarity-unique mb-2">#2</span>
+                    <img src="/images/bsg.png" 
+                         alt="Blue Summer Glasses" 
+                         class="item-image">
+                    <h5 class="item-name">Blue Summer Glasses</h5>
+                    <div class="item-price">
+                        <i class="bi bi-coin me-1"></i>Not Available
+                    </div>
+                </div>
+                
+                <!-- Item 3 -->
+                <div class="item-card">
+                    <span class="rarity-badge rarity-unique mb-2">#3</span>
+                    <img src="/images/bsc.png" 
+                         alt="Blue Summer Cap" 
+                         class="item-image">
+                    <h5 class="item-name">Blue Summer Cap</h5>
+                    <div class="item-price">
+                        <i class="bi bi-coin me-1"></i>Not Available
+                    </div>
+                </div>
+                
+                <!-- Item 4 -->
+                <div class="item-card">
+                    <span class="rarity-badge rarity-unique mb-2">#4</span>
+                    <img src="/images/ccs.png" 
+                         alt="Chaos Control Shoes" 
+                         class="item-image">
+                    <h5 class="item-name">Chaos Control Shoes</h5>
+                    <div class="item-price">
+                        <i class="bi bi-coin me-1"></i>Not Available
+                    </div>
+                </div>
+                
+                <!-- Item 5 -->
+                <div class="item-card">
+                    <span class="rarity-badge rarity-unique mb-2">#5</span>
+                    <img src="/images/Tb.png"
+                         alt="Tanners Bow" 
+                         class="item-image">
+                    <h5 class="item-name">Tanner's Bow</h5>
+                    <div class="item-price">
+                        <i class="bi bi-coin me-1"></i>Not Available
+                    </div>
                 </div>
             </div>
             
-            <!-- Item 2 -->
-            <div class="item-card">
-                <span class="rarity-badge rarity-unique mb-2">#2</span>
-                <img src="/images/bsg.png" 
-                     alt="Blue Summer Glasses" 
-                     class="item-image">
-                <h5 class="item-name">Blue Summer Glasses</h5>
-                <div class="item-price">
-                    <i class="bi bi-coin me-1"></i>Not Available
-                </div>
-            </div>
-            
-            <!-- Item 3 -->
-            <div class="item-card">
-                <span class="rarity-badge rarity-unique mb-2">#3</span>
-                <img src="/images/bsc.png" 
-                     alt="Blue Summer Cap" 
-                     class="item-image">
-                <h5 class="item-name">Blue Summer Cap</h5>
-                <div class="item-price">
-                    <i class="bi bi-coin me-1"></i>Not Available
-                </div>
-            </div>
-            
-            <!-- Item 4 -->
-            <div class="item-card">
-                <span class="rarity-badge rarity-unique mb-2">#4</span>
-                <img src="/images/ccs.png" 
-                     alt="Chaos Control Shoes" 
-                     class="item-image">
-                <h5 class="item-name">Chaos Control Shoes</h5>
-                <div class="item-price">
-                    <i class="bi bi-coin me-1"></i>Not Available
-                </div>
-            </div>
-            
-            <!-- Item 5 -->
-            <div class="item-card">
-                <span class="rarity-badge rarity-unique mb-2">#5</span>
-                <img src="/images/Tb.png"
-                     alt="Tanners Bow" 
-                     class="item-image">
-                <h5 class="item-name">Tanner's Bow</h5>
-                <div class="item-price">
-                    <i class="bi bi-coin me-1"></i>Not Available
-                </div>
+            <div class="text-center mt-4">
+                <a href="https://testkotomuna.my.canva.site/src-pricelist" target="_blank" class="btn btn-classic btn-classic-primary">
+                    <i class="bi bi-box-seam-fill me-2"></i>View All Items
+                </a>
             </div>
         </div>
-        
-        <div class="text-center mt-4">
-            <a href="https://testkotomuna.my.canva.site/src-pricelist" target="_blank" class="btn btn-classic btn-classic-primary">
-                <i class="bi bi-box-seam-fill me-2"></i>View All Items
-            </a>
-        </div>
-    </div>
-</section>
+    </section>
 
-    <!-- Rankings Section -->
+    <!-- Rankings Section - UPDATED (Removed High Score and Box Jumps) -->
     <section id="rankings" class="section-classic" style="background: rgba(255, 107, 0, 0.05);">
         <div class="container">
             <h2 class="section-title">TOP PLAYER RANKINGS</h2>
             
-            <!-- Ranking Tabs -->
+            <!-- Ranking Tabs - Only 3 tabs now -->
             <div class="ranking-tabs d-flex justify-content-center mb-4">
                 <button class="ranking-tab active" data-type="active">
                     <i class="bi bi-clock-history me-2"></i>Most Active
-                </button>
-                <button class="ranking-tab" data-type="highscore">
-                    <i class="bi bi-trophy me-2"></i>High Score
-                </button>
-                <button class="ranking-tab" data-type="boxjumps">
-                    <i class="bi bi-bar-chart me-2"></i>Box Jumps
                 </button>
                 <button class="ranking-tab" data-type="rich">
                     <i class="bi bi-cash-coin me-2"></i>Rich List
@@ -2701,7 +2918,7 @@
     <!-- Downloads Script -->
     <script>
         // itch.io URL
-       const ITCH_IO_URL = 'https://macmaccosme.itch.io/stick-run-classic';
+        const ITCH_IO_URL = 'https://macmaccosme.itch.io/stick-run-classic';
 
         function selectAndroidVersion(version) {
             // Close modal
@@ -2722,7 +2939,7 @@
             }, 500);
         }
 
-         function showDownloadProgress() {
+        function showDownloadProgress() {
             const progressBar = document.getElementById('downloadProgress');
             const progressBarInner = document.getElementById('downloadProgressBar');
             
@@ -2739,7 +2956,7 @@
             }, 1000);
         }
 
-      function hideDownloadProgress() {
+        function hideDownloadProgress() {
             const progressBar = document.getElementById('downloadProgress');
             const progressBarInner = document.getElementById('downloadProgressBar');
             
@@ -2751,15 +2968,7 @@
             }, 500);
         }
 
-        function showDownloadMessage(version) {
-            // No alert at all
-        }
-
-        function showDownloadComplete(version) {
-            // No alert at all
-        }
-
-       // Simple security protection
+        // Simple security protection
         document.addEventListener('DOMContentLoaded', function() {
             // Disable right-click
             document.addEventListener('contextmenu', function(e) {
@@ -2796,200 +3005,275 @@
         });
     </script>
     
- // ========== RANKINGS SCRIPT (Player.IO BigDB) - FIXED VERSION ==========
-<script>
-    let currentRankingType = 'active';
-    let pioClient = null;
+    <!-- ========== MUSIC PLAYER SCRIPT - STICK RUN CLASSIC STYLE ========== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('bgMusic');
+            const musicToggle = document.getElementById('musicToggle');
+            const musicIcon = document.getElementById('musicIcon');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const musicPlayer = document.getElementById('music-player');
+            let isPlaying = false;
 
-    const RANKING_CONFIG = {
-        active:    { table: 'Active',        index: 'active',      field: 'time',            label: 'Active Time'  },
-        highscore: { table: 'PlayerObjects',  index: 'highscoreTS',  field: 'highscore',       label: 'High Score'   },
-        boxjumps:  { table: 'PlayerObjects',  index: 'chighscoreTS', field: 'combo_highscore', label: 'Box Jumps'    },
-        rich:      { table: 'Bank',           index: 'top',          field: 'balance',         label: 'Bank Balance' },
-        topbid:    { table: 'Main',           index: 'topbid',       field: 'bids',            label: 'Top Bid'      }
-    };
+            // Set volume
+            audio.volume = volumeSlider.value / 100;
 
-    function getDisplayName(obj) {
-        if (obj.name) return obj.name;
-        if (obj.key && obj.key.indexOf('simple') === 0) return obj.key.substring(6);
-        return obj.key || 'Unknown Player';
-    }
+            // Try to autoplay
+            function attemptAutoPlay() {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    musicIcon.className = 'bi bi-pause-fill';
+                    musicToggle.classList.add('playing');
+                    musicPlayer.style.borderColor = 'rgba(255, 107, 0, 0.6)';
+                }).catch(function(error) {
+                    console.log('Auto-play blocked, waiting for user interaction');
+                    isPlaying = false;
+                    musicIcon.className = 'bi bi-play-fill';
+                    musicToggle.classList.remove('playing');
+                    // Try again on user interaction
+                    document.addEventListener('click', function playOnClick() {
+                        audio.play().then(() => {
+                            isPlaying = true;
+                            musicIcon.className = 'bi bi-pause-fill';
+                            musicToggle.classList.add('playing');
+                            musicPlayer.style.borderColor = 'rgba(255, 107, 0, 0.6)';
+                        }).catch(() => {});
+                        document.removeEventListener('click', playOnClick);
+                    }, { once: true });
+                });
+            }
 
-    // Helper function to safely get numeric value, filtering out NaN
-    function getSafeNumber(obj, field) {
-        const val = obj[field];
-        if (val === undefined || val === null) return null;
-        if (typeof val === 'number' && !isNaN(val)) return val;
-        if (typeof val === 'string') {
-            const parsed = parseFloat(val);
-            if (!isNaN(parsed)) return parsed;
-        }
-        return null;
-    }
+            // Wait a moment then try to autoplay
+            setTimeout(attemptAutoPlay, 500);
 
-    function connectPlayerIO(callback) {
-        if (pioClient) { 
-            callback(pioClient); 
-            return; 
-        }
-        
-        if (typeof PlayerIO === 'undefined') {
-            console.error('PlayerIO SDK not loaded');
-            showRankingsError('PlayerIO SDK failed to load. Please check your internet connection.');
-            return;
-        }
-        
-        try {
-            PlayerIO.authenticate(
-                "stick-run-classic-v1-1j34zpgpjkd7yo3yrta8w",
-                "rankingsreader",
-                { userId: "rankings-viewer" },
-                {},
-                function(client) { 
-                    pioClient = client; 
-                    callback(client); 
-                },
-                function(error) { 
-                    console.error('Connect failed:', error); 
-                    showRankingsError('Failed to connect to rankings server: ' + (error.message || 'Unknown error'));
+            // Toggle music on button click
+            musicToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (isPlaying) {
+                    audio.pause();
+                    isPlaying = false;
+                    musicIcon.className = 'bi bi-play-fill';
+                    musicToggle.classList.remove('playing');
+                    musicPlayer.style.borderColor = 'rgba(255, 107, 0, 0.4)';
+                } else {
+                    audio.play().then(() => {
+                        isPlaying = true;
+                        musicIcon.className = 'bi bi-pause-fill';
+                        musicToggle.classList.add('playing');
+                        musicPlayer.style.borderColor = 'rgba(255, 107, 0, 0.6)';
+                    }).catch(function(error) {
+                        console.log('Play failed:', error);
+                    });
                 }
-            );
-        } catch (e) {
-            console.error('Authentication error:', e);
-            showRankingsError('Authentication error: ' + e.message);
+            });
+
+            // Volume control
+            volumeSlider.addEventListener('input', function() {
+                audio.volume = this.value / 100;
+            });
+
+            // Handle audio ending (loop)
+            audio.addEventListener('ended', function() {
+                if (isPlaying) {
+                    audio.currentTime = 0;
+                    audio.play().catch(function() {});
+                }
+            });
+
+            // Handle errors
+            audio.addEventListener('error', function(e) {
+                console.log('Audio error:', e);
+                musicIcon.className = 'bi bi-music-note-beamed';
+                musicToggle.classList.remove('playing');
+                isPlaying = false;
+            });
+
+            // Click on music player to toggle
+            musicPlayer.addEventListener('click', function(e) {
+                // Don't trigger if clicking on controls
+                if (e.target.closest('.music-btn') || e.target.closest('.music-volume')) return;
+                musicToggle.click();
+            });
+        });
+    </script>
+    
+    <!-- ========== RANKINGS SCRIPT - UPDATED (No High Score or Box Jumps) ========== -->
+    <script>
+        let currentRankingType = 'active';
+        let pioClient = null;
+
+        // Removed highscore and boxjumps from config
+        const RANKING_CONFIG = {
+            active:    { table: 'Active',        index: 'active',      field: 'time',    label: 'Active Time'  },
+            rich:      { table: 'Bank',          index: 'top',         field: 'balance', label: 'Bank Balance' },
+            topbid:    { table: 'Main',          index: 'topbid',      field: 'bids',    label: 'Top Bid'      }
+        };
+
+        function getDisplayName(obj) {
+            if (obj.name) return obj.name;
+            if (obj.key && obj.key.indexOf('simple') === 0) return obj.key.substring(6);
+            return obj.key || 'Unknown Player';
         }
-    }
 
-    function loadRankings(type) {
-        const cfg = RANKING_CONFIG[type];
-        const container = document.getElementById('rankings-container');
-
-        if (!container) return;
-
-        container.innerHTML = `
-            <div class="ranking-loading">
-                <i class="bi bi-hourglass-split"></i>
-                <p class="ranking-loading-text">Loading ${type} rankings...</p>
-            </div>`;
-
-        connectPlayerIO(function(client) {
+        function connectPlayerIO(callback) {
+            if (pioClient) { 
+                callback(pioClient); 
+                return; 
+            }
+            
+            if (typeof PlayerIO === 'undefined') {
+                console.error('PlayerIO SDK not loaded');
+                showRankingsError('PlayerIO SDK failed to load. Please check your internet connection.');
+                return;
+            }
+            
             try {
-                client.bigDB.loadRange(
-                    cfg.table, cfg.index, null, null, null, 10,
-                    function(objects) {
-                        // Filter out objects where the score is NaN or invalid
-                        const validObjects = objects.filter(obj => {
-                            const score = getSafeNumber(obj, cfg.field);
-                            return score !== null && !isNaN(score) && score > 0;
-                        });
-
-                        // Sort by score descending (highest first)
-                        validObjects.sort((a, b) => {
-                            const aScore = getSafeNumber(a, cfg.field) || 0;
-                            const bScore = getSafeNumber(b, cfg.field) || 0;
-                            return bScore - aScore;
-                        });
-
-                        const rankings = validObjects.slice(0, 10).map((obj, i) => ({
-                            position: i + 1,
-                            name: getDisplayName(obj),
-                            score: getSafeNumber(obj, cfg.field).toLocaleString(),
-                            badge: ""
-                        }));
-
-                        displayRankings(rankings, type);
+                PlayerIO.authenticate(
+                    "stick-run-classic-v1-1j34zpgpjkd7yo3yrta8w",
+                    "rankingsreader",
+                    { userId: "rankings-viewer" },
+                    {},
+                    function(client) { 
+                        pioClient = client; 
+                        callback(client); 
                     },
-                    function(error) {
-                        console.error('loadRange failed:', error);
-                        showRankingsError('Failed to load rankings data: ' + (error.message || 'Unknown error'));
+                    function(error) { 
+                        console.error('Connect failed:', error); 
+                        showRankingsError('Failed to connect to rankings server: ' + (error.message || 'Unknown error'));
                     }
                 );
             } catch (e) {
-                console.error('BigDB error:', e);
-                showRankingsError('Database error: ' + e.message);
+                console.error('Authentication error:', e);
+                showRankingsError('Authentication error: ' + e.message);
             }
-        });
-    }
-
-    function showRankingsError(message) {
-        const container = document.getElementById('rankings-container');
-        if (container) {
-            container.innerHTML = `
-                <div class="ranking-error">
-                    <i class="bi bi-exclamation-triangle" style="font-size: 2rem; color: #ff6b6b;"></i>
-                    <p style="margin-top: 1rem; color: #ff6b6b;">${message || 'Could not load rankings right now.'}</p>
-                    <button onclick="loadRankings('${currentRankingType}')" class="btn btn-classic btn-classic-primary mt-3">
-                        <i class="bi bi-arrow-repeat me-2"></i>Retry
-                    </button>
-                </div>`;
         }
-    }
 
-    function displayRankings(rankings, type) {
-        const container = document.getElementById('rankings-container');
-        if (!container) return;
+        function loadRankings(type) {
+            const cfg = RANKING_CONFIG[type];
+            const container = document.getElementById('rankings-container');
 
-        if (!rankings || rankings.length === 0) {
+            if (!container) return;
+
             container.innerHTML = `
                 <div class="ranking-loading">
-                    <i class="bi bi-inbox"></i>
-                    <p class="ranking-loading-text">No rankings available yet. Be the first to play!</p>
+                    <i class="bi bi-hourglass-split"></i>
+                    <p class="ranking-loading-text">Loading ${type} rankings...</p>
                 </div>`;
-            return;
+
+            connectPlayerIO(function(client) {
+                try {
+                    client.bigDB.loadRange(
+                        cfg.table, cfg.index, null, null, null, 10,
+                        function(objects) {
+                            // Filter out objects with invalid values
+                            const validObjects = objects.filter(obj => {
+                                const val = obj[cfg.field];
+                                if (val === undefined || val === null) return false;
+                                if (typeof val === 'number' && !isNaN(val)) return true;
+                                if (typeof val === 'string') {
+                                    const parsed = parseFloat(val);
+                                    return !isNaN(parsed);
+                                }
+                                return false;
+                            });
+
+                            // Sort by score descending
+                            validObjects.sort((a, b) => {
+                                const aScore = parseFloat(a[cfg.field]) || 0;
+                                const bScore = parseFloat(b[cfg.field]) || 0;
+                                return bScore - aScore;
+                            });
+
+                            const rankings = validObjects.slice(0, 10).map((obj, i) => ({
+                                position: i + 1,
+                                name: getDisplayName(obj),
+                                score: parseFloat(obj[cfg.field]).toLocaleString(),
+                                badge: i === 0 ? '🏆' : i === 1 ? '🥈' : i === 2 ? '🥉' : ''
+                            }));
+
+                            displayRankings(rankings, type);
+                        },
+                        function(error) {
+                            console.error('loadRange failed:', error);
+                            showRankingsError('Failed to load rankings data: ' + (error.message || 'Unknown error'));
+                        }
+                    );
+                } catch (e) {
+                    console.error('BigDB error:', e);
+                    showRankingsError('Database error: ' + e.message);
+                }
+            });
         }
 
-        let html = '';
-        const scoreLabel = RANKING_CONFIG[type].label;
+        function showRankingsError(message) {
+            const container = document.getElementById('rankings-container');
+            if (container) {
+                container.innerHTML = `
+                    <div class="ranking-error">
+                        <i class="bi bi-exclamation-triangle" style="font-size: 2rem; color: #ff6b6b;"></i>
+                        <p style="margin-top: 1rem; color: #ff6b6b;">${message || 'Could not load rankings right now.'}</p>
+                        <button onclick="loadRankings('${currentRankingType}')" class="btn btn-classic btn-classic-primary mt-3">
+                            <i class="bi bi-arrow-repeat me-2"></i>Retry
+                        </button>
+                    </div>`;
+            }
+        }
 
-        rankings.forEach((player, index) => {
-            let cardClass = 'ranking-card';
-            let badge = '';
-            if (index === 0) {
-                cardClass += ' gold';
-                badge = '🏆 #1';
-            } else if (index === 1) {
-                cardClass += ' silver';
-                badge = '🥈 #2';
-            } else if (index === 2) {
-                cardClass += ' bronze';
-                badge = '🥉 #3';
+        function displayRankings(rankings, type) {
+            const container = document.getElementById('rankings-container');
+            if (!container) return;
+
+            if (!rankings || rankings.length === 0) {
+                container.innerHTML = `
+                    <div class="ranking-loading">
+                        <i class="bi bi-inbox"></i>
+                        <p class="ranking-loading-text">No rankings available yet. Be the first to play!</p>
+                    </div>`;
+                return;
             }
 
-            html += `
-                <div class="${cardClass} d-flex align-items-center">
-                    <div class="ranking-position">${player.position}</div>
-                    <div class="ranking-avatar">
-                        <img src="/images/src1.png" alt="${player.name}" title="${player.name}">
-                    </div>
-                    <div class="ranking-info">
-                        <div class="ranking-name">${player.name}</div>
-                        <div class="ranking-score">${scoreLabel}: ${player.score}</div>
-                    </div>
-                    <div class="ranking-badge">${badge}</div>
-                </div>
-            `;
-        });
+            let html = '';
+            const scoreLabel = RANKING_CONFIG[type].label;
 
-        container.innerHTML = html;
-    }
+            rankings.forEach((player, index) => {
+                let cardClass = 'ranking-card';
+                if (index === 0) cardClass += ' gold';
+                else if (index === 1) cardClass += ' silver';
+                else if (index === 2) cardClass += ' bronze';
 
-    // Initialize when DOM is ready
-    document.addEventListener('DOMContentLoaded', function() {
-        // Tab switching
-        document.querySelectorAll('.ranking-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.ranking-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                const type = this.getAttribute('data-type');
-                currentRankingType = type;
-                loadRankings(type);
+                html += `
+                    <div class="${cardClass} d-flex align-items-center">
+                        <div class="ranking-position">${player.position}</div>
+                        <div class="ranking-avatar">
+                            <img src="/images/src1.png" alt="${player.name}" title="${player.name}">
+                        </div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">${player.name}</div>
+                            <div class="ranking-score">${scoreLabel}: ${player.score}</div>
+                        </div>
+                        <div class="ranking-badge">${player.badge}</div>
+                    </div>
+                `;
             });
-        });
 
-        // Load initial rankings
-        loadRankings('active');
-    });
-</script>
+            container.innerHTML = html;
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.ranking-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.ranking-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    const type = this.getAttribute('data-type');
+                    currentRankingType = type;
+                    loadRankings(type);
+                });
+            });
+
+            loadRankings('active');
+        });
+    </script>
     
     <script>
     // Image Slider Functionality
@@ -3101,6 +3385,6 @@
             }
         });
     });
-</script>
+    </script>
 </body>
 </html>
